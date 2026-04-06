@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoPhoto — 限时决策，快速清理相册</title>
+<meta name="description" content="NoPhoto 是一款基于限时决策理念的 iOS 相册清理工具。每张照片几秒做决定，告别选择困难症。">
+<meta name="theme-color" content="#6C5CE7">
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --purple:#6C5CE7;--purple-light:#A29BFE;--purple-dark:#5A4BD1;
+    --red:#FF6B6B;--green:#51CF66;--yellow:#FFD93D;
+    --bg:#0A0A0F;--bg2:#12121A;--card:#1A1A26;
+    --text:#E8E8F0;--text2:#9090A8;
+    --radius:16px;
+  }
+  html{scroll-behavior:smooth;font-size:16px}
+  body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+  a{color:var(--purple-light);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* Hero */
+  .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(108,92,231,.25),transparent 70%);top:-100px;left:50%;transform:translateX(-50%);pointer-events:none;animation:pulse 6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.15)}}
+
+  .hero-icon{width:120px;height:120px;border-radius:28px;background:linear-gradient(135deg,var(--purple),var(--purple-dark));display:flex;align-items:center;justify-content:center;font-size:56px;margin-bottom:1.5rem;box-shadow:0 20px 60px rgba(108,92,231,.4);position:relative;z-index:1}
+  .hero h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:800;letter-spacing:-.02em;position:relative;z-index:1}
+  .hero h1 span{background:linear-gradient(135deg,var(--purple-light),var(--red));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .hero .tagline{font-size:clamp(1.1rem,2.5vw,1.4rem);color:var(--text2);margin-top:.75rem;position:relative;z-index:1}
+  .hero .cta-group{margin-top:2.5rem;display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;position:relative;z-index:1}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;border-radius:50px;font-size:1rem;font-weight:600;border:none;cursor:pointer;transition:all .25s}
+  .btn-primary{background:var(--purple);color:#fff;box-shadow:0 4px 24px rgba(108,92,231,.4)}
+  .btn-primary:hover{background:var(--purple-dark);transform:translateY(-2px);box-shadow:0 8px 32px rgba(108,92,231,.5);text-decoration:none;color:#fff}
+  .btn-outline{background:transparent;color:var(--text);border:1.5px solid rgba(255,255,255,.15);backdrop-filter:blur(8px)}
+  .btn-outline:hover{border-color:var(--purple-light);color:var(--purple-light);text-decoration:none}
+  .scroll-hint{position:absolute;bottom:2rem;z-index:1;animation:bounce 2s ease-in-out infinite}
+  @keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+  .scroll-hint svg{width:24px;height:24px;stroke:var(--text2)}
+
+  /* Section */
+  section{padding:5rem 1.5rem}
+  .container{max-width:1100px;margin:0 auto}
+  .section-title{text-align:center;margin-bottom:3.5rem}
+  .section-title h2{font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700}
+  .section-title p{color:var(--text2);margin-top:.5rem;font-size:1.05rem}
+
+  /* How It Works */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem}
+  .step{background:var(--card);border-radius:var(--radius);padding:2rem;text-align:center;border:1px solid rgba(255,255,255,.05);transition:transform .3s,box-shadow .3s}
+  .step:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+  .step-num{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--purple-dark));font-size:1.3rem;font-weight:700;margin-bottom:1rem}
+  .step h3{font-size:1.15rem;margin-bottom:.5rem}
+  .step p{color:var(--text2);font-size:.95rem}
+
+  /* Features */
+  .features-section{background:var(--bg2)}
+  .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+  .feature{background:var(--card);border-radius:var(--radius);padding:1.75rem;border:1px solid rgba(255,255,255,.05);transition:transform .3s}
+  .feature:hover{transform:translateY(-3px)}
+  .feature-icon{font-size:2rem;margin-bottom:.75rem;display:block}
+  .feature h3{font-size:1.1rem;margin-bottom:.4rem}
+  .feature p{color:var(--text2);font-size:.9rem}
+
+  /* Modes */
+  .modes{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem}
+  @media(max-width:640px){.modes{grid-template-columns:1fr}}
+  .mode-card{background:var(--card);border-radius:var(--radius);padding:2rem;border:1px solid rgba(255,255,255,.05);text-align:center}
+  .mode-card h3{font-size:1.2rem;margin:.75rem 0 .5rem}
+  .mode-card p{color:var(--text2);font-size:.9rem}
+  .mode-icon{font-size:3rem}
+  .swipe-demo{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:.4rem;width:140px;height:140px;margin:1rem auto 0}
+  .swipe-demo .dir{display:flex;align-items:center;justify-content:center;border-radius:10px;font-size:.75rem;font-weight:600;padding:.25rem}
+  .dir-up{grid-column:2;grid-row:1;background:rgba(81,207,102,.15);color:var(--green)}
+  .dir-center{grid-column:2;grid-row:2;background:rgba(108,92,231,.15);color:var(--purple-light);font-size:1.2rem}
+  .dir-down{grid-column:2;grid-row:3;background:rgba(162,155,254,.15);color:var(--purple-light)}
+  .dir-left{grid-column:1;grid-row:2;background:rgba(255,107,107,.15);color:var(--red)}
+  .dir-right{grid-column:3;grid-row:2;background:rgba(255,217,61,.15);color:var(--yellow)}
+
+  /* Combo */
+  .combo-section{text-align:center}
+  .combo-tiers{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem;margin-top:2rem}
+  .tier{padding:.6rem 1.2rem;border-radius:50px;font-size:.85rem;font-weight:600}
+  .tier-common{background:rgba(255,255,255,.08);color:var(--text2)}
+  .tier-uncommon{background:rgba(81,207,102,.12);color:#51CF66}
+  .tier-rare{background:rgba(51,154,240,.12);color:#339AF0}
+  .tier-epic{background:rgba(162,155,254,.12);color:#A29BFE}
+  .tier-legendary{background:rgba(255,217,61,.12);color:#FFD93D}
+  .tier-mythic{background:rgba(255,107,107,.12);color:#FF6B6B}
+
+  /* Safety */
+  .safety{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+  .safety-item{display:flex;gap:1rem;align-items:flex-start;background:var(--card);border-radius:var(--radius);padding:1.5rem;border:1px solid rgba(255,255,255,.05)}
+  .safety-icon{font-size:1.8rem;flex-shrink:0}
+  .safety-item h3{font-size:1rem;margin-bottom:.25rem}
+  .safety-item p{color:var(--text2);font-size:.9rem}
+
+  /* Pro */
+  .pro-section{background:var(--bg2)}
+  .pro-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
+  .pro-card{background:linear-gradient(135deg,rgba(108,92,231,.1),rgba(162,155,254,.05));border:1px solid rgba(108,92,231,.2);border-radius:var(--radius);padding:1.5rem;text-align:center}
+  .pro-card .feature-icon{font-size:2.2rem}
+  .pro-card h3{font-size:1rem;margin-bottom:.3rem}
+  .pro-card p{color:var(--text2);font-size:.85rem}
+
+  /* Languages */
+  .langs{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem;margin-top:1.5rem}
+  .lang-tag{padding:.5rem 1.2rem;border-radius:50px;background:var(--card);border:1px solid rgba(255,255,255,.06);font-size:.9rem}
+
+  /* CTA Bottom */
+  .cta-bottom{text-align:center;padding:5rem 1.5rem}
+  .cta-bottom h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:.75rem}
+  .cta-bottom p{color:var(--text2);font-size:1.1rem;margin-bottom:2rem}
+
+  /* Footer */
+  footer{text-align:center;padding:2rem 1.5rem;border-top:1px solid rgba(255,255,255,.05);color:var(--text2);font-size:.85rem}
+  footer .links{display:flex;justify-content:center;gap:1.5rem;margin-bottom:.75rem}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero" id="top">
+  <div class="hero-icon">📷</div>
+  <h1><span>NoPhoto</span></h1>
+  <p class="tagline">限时决策，快速清理相册<br>告别选择困难症，几秒做出判断</p>
+  <div class="cta-group">
+    <a href="https://apps.apple.com/app/nophoto/id6744039783" class="btn btn-primary"> App Store 下载</a>
+    <a href="#features" class="btn btn-outline">了解更多</a>
+  </div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section id="how">
+  <div class="container">
+    <div class="section-title">
+      <h2>怎么用？超简单</h2>
+      <p>三步搞定，相册焕然一新</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>开始审判</h3>
+        <p>点击首页「开始审判」，进入限时决策模式</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>快速决定</h3>
+        <p>每张照片倒计时 1-10 秒，滑动或点击做出选择</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>确认粉碎</h3>
+        <p>审判结束后一次性确认，批量删除不纠结</p>
+      </div>
+      <div class="step">
+        <div class="step-num">✓</div>
+        <h3>安全兜底</h3>
+        <p>误删不怕，回收站保留 30 天随时恢复</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Operation Modes -->
+<section class="features-section" id="modes">
+  <div class="container">
+    <div class="section-title">
+      <h2>双操作模式</h2>
+      <p>选你顺手的方式来操作</p>
+    </div>
+    <div class="modes">
+      <div class="mode-card">
+        <div class="mode-icon">👆</div>
+        <h3>滑动模式</h3>
+        <p>四个方向，四种操作<br>每个方向可自定义</p>
+        <div class="swipe-demo">
+          <div class="dir dir-up">保留</div>
+          <div class="dir dir-left">粉碎</div>
+          <div class="dir dir-center">📷</div>
+          <div class="dir dir-right">分类</div>
+          <div class="dir dir-down">赦免</div>
+        </div>
+      </div>
+      <div class="mode-card">
+        <div class="mode-icon">🎮</div>
+        <h3>按钮模式</h3>
+        <p>三个清晰的操作按钮<br>点击即决，简单直接</p>
+        <div style="display:flex;gap:.5rem;justify-content:center;margin-top:1.5rem">
+          <span style="padding:.6rem 1.2rem;border-radius:12px;background:rgba(162,155,254,.15);color:var(--purple-light);font-size:.85rem;font-weight:600">赦免</span>
+          <span style="padding:.6rem 1.2rem;border-radius:12px;background:rgba(81,207,102,.15);color:var(--green);font-size:.85rem;font-weight:600">保留</span>
+          <span style="padding:.6rem 1.2rem;border-radius:12px;background:rgba(255,107,107,.15);color:var(--red);font-size:.85rem;font-weight:600">粉碎</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="container">
+    <div class="section-title">
+      <h2>功能亮点</h2>
+      <p>不止是删照片那么简单</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">⏱️</span>
+        <h3>限时审判</h3>
+        <p>1-10 秒可调倒计时，超时自动执行预设操作，强制你做出决定</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📸</span>
+        <h3>Live Photo 支持</h3>
+        <p>自动播放实况照片，支持单独设置决策时间，不错过任何细节</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📂</span>
+        <h3>相册分类</h3>
+        <p>审判中直接将照片分类到指定相册，整理与清理一步搞定</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🔀</span>
+        <h3>随机审判</h3>
+        <p>打乱照片顺序，让清理过程充满惊喜，避免按时间线产生情感偏差</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🎯</span>
+        <h3>高级筛选</h3>
+        <p>按媒体类型、相册、日期范围精确筛选要审判的照片</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">💀</span>
+        <h3>硬核模式</h3>
+        <p>跳过回收站直接永久删除，适合追求极致清理的勇者</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📊</span>
+        <h3>统计面板</h3>
+        <p>查看每周趋势、总决策数、平均决策时间等历史数据</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🏆</span>
+        <h3>成就系统</h3>
+        <p>解锁首次粉碎、连击大师、连续打卡等多种成就徽章</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">📱</span>
+        <h3>桌面小组件</h3>
+        <p>主屏小组件随时提醒你该清理了，一键进入审判</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🤝</span>
+        <h3>面对面分享</h3>
+        <p>局域网内创建房间，和朋友一起浏览分享最近拍的照片</p>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">🌙</span>
+        <h3>深色模式</h3>
+        <p>完美适配系统浅色/深色主题，多种强调色可选</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Combo -->
+<section class="features-section combo-section">
+  <div class="container">
+    <div class="section-title">
+      <h2>🔥 连击 Combo</h2>
+      <p>连续粉碎触发连击效果，看看你能冲到什么段位</p>
+    </div>
+    <div class="combo-tiers">
+      <span class="tier tier-common">Common</span>
+      <span class="tier tier-uncommon">Uncommon</span>
+      <span class="tier tier-rare">Rare</span>
+      <span class="tier tier-epic">Epic</span>
+      <span class="tier tier-legendary">Legendary</span>
+      <span class="tier tier-mythic">Mythic</span>
+    </div>
+  </div>
+</section>
+
+<!-- Safety -->
+<section id="safety">
+  <div class="container">
+    <div class="section-title">
+      <h2>安全第一</h2>
+      <p>大胆操作，我们帮你兜底</p>
+    </div>
+    <div class="safety">
+      <div class="safety-item">
+        <span class="safety-icon">🗑️</span>
+        <div>
+          <h3>30 天回收站</h3>
+          <p>误删的照片保留 30 天，随时恢复到相册</p>
+        </div>
+      </div>
+      <div class="safety-item">
+        <span class="safety-icon">🛡️</span>
+        <div>
+          <h3>赦免名单</h3>
+          <p>标记为赦免的照片永远不会再出现在审判队列</p>
+        </div>
+      </div>
+      <div class="safety-item">
+        <span class="safety-icon">📦</span>
+        <div>
+          <h3>批量确认</h3>
+          <p>审判结束后统一确认删除，不会误触直接删</p>
+        </div>
+      </div>
+      <div class="safety-item">
+        <span class="safety-icon">☁️</span>
+        <div>
+          <h3>iCloud 同步</h3>
+          <p>设置和统计数据跨设备同步，换机无忧</p>
+        </div>
+      </div>
+      <div class="safety-item">
+        <span class="safety-icon">🔒</span>
+        <div>
+          <h3>隐私保护</h3>
+          <p>所有操作在本地完成，不上传任何照片数据</p>
+        </div>
+      </div>
+      <div class="safety-item">
+        <span class="safety-icon">🌐</span>
+        <div>
+          <h3>多语言支持</h3>
+          <p>简中 / 繁中 / English / 日本語 / 한국어 / Español</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Pro -->
+<section class="pro-section" id="pro">
+  <div class="container">
+    <div class="section-title">
+      <h2>NoPhoto Pro</h2>
+      <p>解锁全部功能，无限制使用</p>
+    </div>
+    <div class="pro-grid">
+      <div class="pro-card">
+        <span class="feature-icon">♾️</span>
+        <h3>无限审判</h3>
+        <p>没有每日限额，随时随地清理</p>
+      </div>
+      <div class="pro-card">
+        <span class="feature-icon">📱</span>
+        <h3>桌面小组件</h3>
+        <p>主屏快速入口</p>
+      </div>
+      <div class="pro-card">
+        <span class="feature-icon">☁️</span>
+        <h3>iCloud 同步</h3>
+        <p>跨设备同步数据</p>
+      </div>
+      <div class="pro-card">
+        <span class="feature-icon">📊</span>
+        <h3>完整统计</h3>
+        <p>查看全部历史数据</p>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:2rem;color:var(--text2);font-size:.9rem">提供月度、年度和买断制三种方案</p>
+  </div>
+</section>
+
+<!-- CTA Bottom -->
+<section class="cta-bottom">
+  <h2>用最短的时间<br>做最果断的决定</h2>
+  <p>下载 NoPhoto，今天就开始清理你的相册</p>
+  <a href="https://apps.apple.com/app/nophoto/id6744039783" class="btn btn-primary"> App Store 下载</a>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="links">
+    <a href="https://apps.apple.com/app/nophoto/id6744039783">App Store</a>
+    <a href="mailto:kinyochan@gmail.com">联系我们</a>
+    <a href="privacy.html">隐私政策</a>
+    <a href="privacy-en.html">Privacy Policy</a>
+  </div>
+  <p>&copy; 2026 kinyo. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
