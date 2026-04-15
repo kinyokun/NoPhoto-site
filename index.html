@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NoPhoto — 限时决策，快速清理相册</title>
-<meta name="description" content="NoPhoto 是一款基于限时决策理念的 iOS 相册清理工具。每张照片几秒做决定，告别选择困难症。">
+<title>NoPhoto</title>
+<meta name="description" content="NoPhoto — Timed decisions, quick photo cleanup.">
 <meta name="theme-color" content="#6C5CE7">
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -19,6 +19,18 @@
   body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
   a{color:var(--purple-light);text-decoration:none}
   a:hover{text-decoration:underline}
+
+  /* Language Switcher */
+  .lang-switcher{position:fixed;top:1rem;right:1rem;z-index:1000}
+  .lang-btn{background:rgba(26,26,38,.85);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:50px;padding:.45rem .9rem;color:var(--text);font-size:.85rem;cursor:pointer;display:flex;align-items:center;gap:.35rem;transition:all .2s}
+  .lang-btn:hover{border-color:var(--purple-light)}
+  .lang-btn svg{width:14px;height:14px;stroke:var(--text2);transition:transform .2s}
+  .lang-btn.open svg{transform:rotate(180deg)}
+  .lang-menu{position:absolute;top:calc(100% + .4rem);right:0;background:rgba(26,26,38,.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:.35rem;min-width:140px;opacity:0;visibility:hidden;transform:translateY(-4px);transition:all .2s}
+  .lang-menu.show{opacity:1;visibility:visible;transform:translateY(0)}
+  .lang-option{display:block;width:100%;padding:.5rem .75rem;border:none;background:none;color:var(--text);font-size:.85rem;text-align:left;border-radius:8px;cursor:pointer;transition:background .15s}
+  .lang-option:hover{background:rgba(108,92,231,.15)}
+  .lang-option.active{color:var(--purple-light);font-weight:600}
 
   /* Hero */
   .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;overflow:hidden}
@@ -104,10 +116,6 @@
   .pro-card h3{font-size:1rem;margin-bottom:.3rem}
   .pro-card p{color:var(--text2);font-size:.85rem}
 
-  /* Languages */
-  .langs{display:flex;flex-wrap:wrap;justify-content:center;gap:.75rem;margin-top:1.5rem}
-  .lang-tag{padding:.5rem 1.2rem;border-radius:50px;background:var(--card);border:1px solid rgba(255,255,255,.06);font-size:.9rem}
-
   /* CTA Bottom */
   .cta-bottom{text-align:center;padding:5rem 1.5rem}
   .cta-bottom h2{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;margin-bottom:.75rem}
@@ -120,14 +128,30 @@
 </head>
 <body>
 
+<!-- Language Switcher -->
+<div class="lang-switcher">
+  <button class="lang-btn" id="langBtn" aria-label="Switch language">
+    <span id="langLabel">简体中文</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+  <div class="lang-menu" id="langMenu">
+    <button class="lang-option" data-lang="zh-Hans">简体中文</button>
+    <button class="lang-option" data-lang="zh-Hant">繁體中文</button>
+    <button class="lang-option" data-lang="en">English</button>
+    <button class="lang-option" data-lang="ja">日本語</button>
+    <button class="lang-option" data-lang="ko">한국어</button>
+    <button class="lang-option" data-lang="es">Español</button>
+  </div>
+</div>
+
 <!-- Hero -->
 <section class="hero" id="top">
   <div class="hero-icon">📷</div>
   <h1><span>NoPhoto</span></h1>
-  <p class="tagline">限时决策，快速清理相册<br>告别选择困难症，几秒做出判断</p>
+  <p class="tagline" data-i18n="hero_tagline">限时决策，快速清理相册<br>告别选择困难症，几秒做出判断</p>
   <div class="cta-group">
-    <a href="https://apps.apple.com/app/nophoto/id6744039783" class="btn btn-primary"> App Store 下载</a>
-    <a href="#features" class="btn btn-outline">了解更多</a>
+    <a href="https://apps.apple.com/app/nophoto/id6744039783" class="btn btn-primary" data-i18n="hero_cta_appstore"> App Store 下载</a>
+    <a href="#features" class="btn btn-outline" data-i18n="hero_cta_more">了解更多</a>
   </div>
   <div class="scroll-hint">
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
@@ -138,29 +162,29 @@
 <section id="how">
   <div class="container">
     <div class="section-title">
-      <h2>怎么用？超简单</h2>
-      <p>三步搞定，相册焕然一新</p>
+      <h2 data-i18n="how_title">怎么用？超简单</h2>
+      <p data-i18n="how_subtitle">三步搞定，相册焕然一新</p>
     </div>
     <div class="steps">
       <div class="step">
         <div class="step-num">1</div>
-        <h3>开始审判</h3>
-        <p>点击首页「开始审判」，进入限时决策模式</p>
+        <h3 data-i18n="step1_title">开始审判</h3>
+        <p data-i18n="step1_desc">点击首页「开始审判」，进入限时决策模式</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
-        <h3>快速决定</h3>
-        <p>每张照片倒计时 1-10 秒，滑动或点击做出选择</p>
+        <h3 data-i18n="step2_title">快速决定</h3>
+        <p data-i18n="step2_desc">每张照片倒计时 1-10 秒，滑动或点击做出选择</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
-        <h3>确认粉碎</h3>
-        <p>审判结束后一次性确认，批量删除不纠结</p>
+        <h3 data-i18n="step3_title">确认粉碎</h3>
+        <p data-i18n="step3_desc">审判结束后一次性确认，批量删除不纠结</p>
       </div>
       <div class="step">
         <div class="step-num">✓</div>
-        <h3>安全兜底</h3>
-        <p>误删不怕，回收站保留 30 天随时恢复</p>
+        <h3 data-i18n="step4_title">安全兜底</h3>
+        <p data-i18n="step4_desc">误删不怕，回收站保留 30 天随时恢复</p>
       </div>
     </div>
   </div>
@@ -170,30 +194,30 @@
 <section class="features-section" id="modes">
   <div class="container">
     <div class="section-title">
-      <h2>双操作模式</h2>
-      <p>选你顺手的方式来操作</p>
+      <h2 data-i18n="modes_title">双操作模式</h2>
+      <p data-i18n="modes_subtitle">选你顺手的方式来操作</p>
     </div>
     <div class="modes">
       <div class="mode-card">
         <div class="mode-icon">👆</div>
-        <h3>滑动模式</h3>
-        <p>四个方向，四种操作<br>每个方向可自定义</p>
+        <h3 data-i18n="mode_swipe_title">滑动模式</h3>
+        <p data-i18n="mode_swipe_desc">四个方向，四种操作<br>每个方向可自定义</p>
         <div class="swipe-demo">
-          <div class="dir dir-up">保留</div>
-          <div class="dir dir-left">粉碎</div>
+          <div class="dir dir-up" data-i18n="dir_keep">保留</div>
+          <div class="dir dir-left" data-i18n="dir_shred">粉碎</div>
           <div class="dir dir-center">📷</div>
-          <div class="dir dir-right">分类</div>
-          <div class="dir dir-down">赦免</div>
+          <div class="dir dir-right" data-i18n="dir_classify">分类</div>
+          <div class="dir dir-down" data-i18n="dir_exempt">赦免</div>
         </div>
       </div>
       <div class="mode-card">
         <div class="mode-icon">🎮</div>
-        <h3>按钮模式</h3>
-        <p>三个清晰的操作按钮<br>点击即决，简单直接</p>
+        <h3 data-i18n="mode_button_title">按钮模式</h3>
+        <p data-i18n="mode_button_desc">三个清晰的操作按钮<br>点击即决，简单直接</p>
         <div style="display:flex;gap:.5rem;justify-content:center;margin-top:1.5rem">
-          <span style="padding:.6rem 1.2rem;border-radius:12px;background:rgba(162,155,254,.15);color:var(--purple-light);font-size:.85rem;font-weight:600">赦免</span>
-          <span style="padding:.6rem 1.2rem;border-radius:12px;background:rgba(81,207,102,.15);color:var(--green);font-size:.85rem;font-weight:600">保留</span>
-          <span style="padding:.6rem 1.2rem;border-radius:12px;background:rgba(255,107,107,.15);color:var(--red);font-size:.85rem;font-weight:600">粉碎</span>
+          <span style="padding:.6rem 1.2rem;border-radius:12px;background:rgba(162,155,254,.15);color:var(--purple-light);font-size:.85rem;font-weight:600" data-i18n="dir_exempt">赦免</span>
+          <span style="padding:.6rem 1.2rem;border-radius:12px;background:rgba(81,207,102,.15);color:var(--green);font-size:.85rem;font-weight:600" data-i18n="dir_keep">保留</span>
+          <span style="padding:.6rem 1.2rem;border-radius:12px;background:rgba(255,107,107,.15);color:var(--red);font-size:.85rem;font-weight:600" data-i18n="dir_shred">粉碎</span>
         </div>
       </div>
     </div>
@@ -204,64 +228,64 @@
 <section id="features">
   <div class="container">
     <div class="section-title">
-      <h2>功能亮点</h2>
-      <p>不止是删照片那么简单</p>
+      <h2 data-i18n="features_title">功能亮点</h2>
+      <p data-i18n="features_subtitle">不止是删照片那么简单</p>
     </div>
     <div class="features">
       <div class="feature">
         <span class="feature-icon">⏱️</span>
-        <h3>限时审判</h3>
-        <p>1-10 秒可调倒计时，超时自动执行预设操作，强制你做出决定</p>
+        <h3 data-i18n="feat_timer_title">限时审判</h3>
+        <p data-i18n="feat_timer_desc">1-10 秒可调倒计时，超时自动执行预设操作，强制你做出决定</p>
       </div>
       <div class="feature">
         <span class="feature-icon">📸</span>
-        <h3>Live Photo 支持</h3>
-        <p>自动播放实况照片，支持单独设置决策时间，不错过任何细节</p>
+        <h3 data-i18n="feat_live_title">Live Photo 支持</h3>
+        <p data-i18n="feat_live_desc">自动播放实况照片，支持单独设置决策时间，不错过任何细节</p>
       </div>
       <div class="feature">
         <span class="feature-icon">📂</span>
-        <h3>相册分类</h3>
-        <p>审判中直接将照片分类到指定相册，整理与清理一步搞定</p>
+        <h3 data-i18n="feat_album_title">相册分类</h3>
+        <p data-i18n="feat_album_desc">审判中直接将照片分类到指定相册，整理与清理一步搞定</p>
       </div>
       <div class="feature">
         <span class="feature-icon">🔀</span>
-        <h3>随机审判</h3>
-        <p>打乱照片顺序，让清理过程充满惊喜，避免按时间线产生情感偏差</p>
+        <h3 data-i18n="feat_random_title">随机审判</h3>
+        <p data-i18n="feat_random_desc">打乱照片顺序，让清理过程充满惊喜，避免按时间线产生情感偏差</p>
       </div>
       <div class="feature">
         <span class="feature-icon">🎯</span>
-        <h3>高级筛选</h3>
-        <p>按媒体类型、相册、日期范围精确筛选要审判的照片</p>
+        <h3 data-i18n="feat_filter_title">高级筛选</h3>
+        <p data-i18n="feat_filter_desc">按媒体类型、相册、日期范围精确筛选要审判的照片</p>
       </div>
       <div class="feature">
         <span class="feature-icon">💀</span>
-        <h3>硬核模式</h3>
-        <p>跳过回收站直接永久删除，适合追求极致清理的勇者</p>
+        <h3 data-i18n="feat_hardcore_title">硬核模式</h3>
+        <p data-i18n="feat_hardcore_desc">跳过回收站直接永久删除，适合追求极致清理的勇者</p>
       </div>
       <div class="feature">
         <span class="feature-icon">📊</span>
-        <h3>统计面板</h3>
-        <p>查看每周趋势、总决策数、平均决策时间等历史数据</p>
+        <h3 data-i18n="feat_stats_title">统计面板</h3>
+        <p data-i18n="feat_stats_desc">查看每周趋势、总决策数、平均决策时间等历史数据</p>
       </div>
       <div class="feature">
         <span class="feature-icon">🏆</span>
-        <h3>成就系统</h3>
-        <p>解锁首次粉碎、连击大师、连续打卡等多种成就徽章</p>
+        <h3 data-i18n="feat_achieve_title">成就系统</h3>
+        <p data-i18n="feat_achieve_desc">解锁首次粉碎、连击大师、连续打卡等多种成就徽章</p>
       </div>
       <div class="feature">
         <span class="feature-icon">📱</span>
-        <h3>桌面小组件</h3>
-        <p>主屏小组件随时提醒你该清理了，一键进入审判</p>
+        <h3 data-i18n="feat_widget_title">桌面小组件</h3>
+        <p data-i18n="feat_widget_desc">主屏小组件随时提醒你该清理了，一键进入审判</p>
       </div>
       <div class="feature">
         <span class="feature-icon">🤝</span>
-        <h3>面对面分享</h3>
-        <p>局域网内创建房间，和朋友一起浏览分享最近拍的照片</p>
+        <h3 data-i18n="feat_share_title">面对面分享</h3>
+        <p data-i18n="feat_share_desc">局域网内创建房间，和朋友一起浏览分享最近拍的照片</p>
       </div>
       <div class="feature">
         <span class="feature-icon">🌙</span>
-        <h3>深色模式</h3>
-        <p>完美适配系统浅色/深色主题，多种强调色可选</p>
+        <h3 data-i18n="feat_dark_title">深色模式</h3>
+        <p data-i18n="feat_dark_desc">完美适配系统浅色/深色主题，多种强调色可选</p>
       </div>
     </div>
   </div>
@@ -271,8 +295,8 @@
 <section class="features-section combo-section">
   <div class="container">
     <div class="section-title">
-      <h2>🔥 连击 Combo</h2>
-      <p>连续粉碎触发连击效果，看看你能冲到什么段位</p>
+      <h2 data-i18n="combo_title">🔥 连击 Combo</h2>
+      <p data-i18n="combo_desc">连续粉碎触发连击效果，看看你能冲到什么段位</p>
     </div>
     <div class="combo-tiers">
       <span class="tier tier-common">Common</span>
@@ -289,50 +313,50 @@
 <section id="safety">
   <div class="container">
     <div class="section-title">
-      <h2>安全第一</h2>
-      <p>大胆操作，我们帮你兜底</p>
+      <h2 data-i18n="safety_title">安全第一</h2>
+      <p data-i18n="safety_subtitle">大胆操作，我们帮你兜底</p>
     </div>
     <div class="safety">
       <div class="safety-item">
         <span class="safety-icon">🗑️</span>
         <div>
-          <h3>30 天回收站</h3>
-          <p>误删的照片保留 30 天，随时恢复到相册</p>
+          <h3 data-i18n="safe_recycle_title">30 天回收站</h3>
+          <p data-i18n="safe_recycle_desc">误删的照片保留 30 天，随时恢复到相册</p>
         </div>
       </div>
       <div class="safety-item">
         <span class="safety-icon">🛡️</span>
         <div>
-          <h3>赦免名单</h3>
-          <p>标记为赦免的照片永远不会再出现在审判队列</p>
+          <h3 data-i18n="safe_exempt_title">赦免名单</h3>
+          <p data-i18n="safe_exempt_desc">标记为赦免的照片永远不会再出现在审判队列</p>
         </div>
       </div>
       <div class="safety-item">
         <span class="safety-icon">📦</span>
         <div>
-          <h3>批量确认</h3>
-          <p>审判结束后统一确认删除，不会误触直接删</p>
+          <h3 data-i18n="safe_batch_title">批量确认</h3>
+          <p data-i18n="safe_batch_desc">审判结束后统一确认删除，不会误触直接删</p>
         </div>
       </div>
       <div class="safety-item">
         <span class="safety-icon">☁️</span>
         <div>
-          <h3>iCloud 同步</h3>
-          <p>设置和统计数据跨设备同步，换机无忧</p>
+          <h3 data-i18n="safe_icloud_title">iCloud 同步</h3>
+          <p data-i18n="safe_icloud_desc">设置和统计数据跨设备同步，换机无忧</p>
         </div>
       </div>
       <div class="safety-item">
         <span class="safety-icon">🔒</span>
         <div>
-          <h3>隐私保护</h3>
-          <p>所有操作在本地完成，不上传任何照片数据</p>
+          <h3 data-i18n="safe_privacy_title">隐私保护</h3>
+          <p data-i18n="safe_privacy_desc">所有操作在本地完成，不上传任何照片数据</p>
         </div>
       </div>
       <div class="safety-item">
         <span class="safety-icon">🌐</span>
         <div>
-          <h3>多语言支持</h3>
-          <p>简中 / 繁中 / English / 日本語 / 한국어 / Español</p>
+          <h3 data-i18n="safe_lang_title">多语言支持</h3>
+          <p data-i18n="safe_lang_desc">简中 / 繁中 / English / 日本語 / 한국어 / Español</p>
         </div>
       </div>
     </div>
@@ -343,29 +367,29 @@
 <section class="pro-section" id="pro">
   <div class="container">
     <div class="section-title">
-      <h2>一次购买，全部解锁</h2>
-      <p>App Store 买断制，无订阅、无内购、无广告</p>
+      <h2 data-i18n="pro_title">一次购买，全部解锁</h2>
+      <p data-i18n="pro_subtitle">App Store 买断制，无订阅、无内购、无广告</p>
     </div>
     <div class="pro-grid">
       <div class="pro-card">
         <span class="feature-icon">♾️</span>
-        <h3>无限审判</h3>
-        <p>没有每日限额，随时随地清理</p>
+        <h3 data-i18n="pro_unlimited_title">无限审判</h3>
+        <p data-i18n="pro_unlimited_desc">没有每日限额，随时随地清理</p>
       </div>
       <div class="pro-card">
         <span class="feature-icon">📱</span>
-        <h3>桌面小组件</h3>
-        <p>主屏快速入口</p>
+        <h3 data-i18n="pro_widget_title">桌面小组件</h3>
+        <p data-i18n="pro_widget_desc">主屏快速入口</p>
       </div>
       <div class="pro-card">
         <span class="feature-icon">☁️</span>
-        <h3>iCloud 同步</h3>
-        <p>跨设备同步数据</p>
+        <h3 data-i18n="pro_icloud_title">iCloud 同步</h3>
+        <p data-i18n="pro_icloud_desc">跨设备同步数据</p>
       </div>
       <div class="pro-card">
         <span class="feature-icon">📊</span>
-        <h3>完整统计</h3>
-        <p>查看全部历史数据</p>
+        <h3 data-i18n="pro_stats_title">完整统计</h3>
+        <p data-i18n="pro_stats_desc">查看全部历史数据</p>
       </div>
     </div>
   </div>
@@ -373,21 +397,619 @@
 
 <!-- CTA Bottom -->
 <section class="cta-bottom">
-  <h2>用最短的时间<br>做最果断的决定</h2>
-  <p>下载 NoPhoto，今天就开始清理你的相册</p>
-  <a href="https://apps.apple.com/app/nophoto/id6744039783" class="btn btn-primary"> App Store 下载</a>
+  <h2 data-i18n="cta_title">用最短的时间<br>做最果断的决定</h2>
+  <p data-i18n="cta_desc">下载 NoPhoto，今天就开始清理你的相册</p>
+  <a href="https://apps.apple.com/app/nophoto/id6744039783" class="btn btn-primary" data-i18n="hero_cta_appstore"> App Store 下载</a>
 </section>
 
 <!-- Footer -->
 <footer>
   <div class="links">
     <a href="https://apps.apple.com/app/nophoto/id6744039783">App Store</a>
-    <a href="mailto:kinyokun@163.com">联系我们</a>
-    <a href="privacy.html">隐私政策</a>
-    <a href="privacy-en.html">Privacy Policy</a>
+    <a href="mailto:kinyokun@163.com" data-i18n="footer_contact">联系我们</a>
+    <a href="privacy.html" id="privacyLink" data-i18n="footer_privacy">隐私政策</a>
   </div>
   <p>&copy; 2026 kinyo. All rights reserved.</p>
 </footer>
+
+<script>
+(function(){
+  var T = {
+    "zh-Hans": {
+      hero_tagline: "限时决策，快速清理相册<br>告别选择困难症，几秒做出判断",
+      hero_cta_appstore: " App Store 下载",
+      hero_cta_more: "了解更多",
+      how_title: "怎么用？超简单",
+      how_subtitle: "三步搞定，相册焕然一新",
+      step1_title: "开始审判",
+      step1_desc: "点击首页「开始审判」，进入限时决策模式",
+      step2_title: "快速决定",
+      step2_desc: "每张照片倒计时 1-10 秒，滑动或点击做出选择",
+      step3_title: "确认粉碎",
+      step3_desc: "审判结束后一次性确认，批量删除不纠结",
+      step4_title: "安全兜底",
+      step4_desc: "误删不怕，回收站保留 30 天随时恢复",
+      modes_title: "双操作模式",
+      modes_subtitle: "选你顺手的方式来操作",
+      mode_swipe_title: "滑动模式",
+      mode_swipe_desc: "四个方向，四种操作<br>每个方向可自定义",
+      mode_button_title: "按钮模式",
+      mode_button_desc: "三个清晰的操作按钮<br>点击即决，简单直接",
+      dir_keep: "保留",
+      dir_shred: "粉碎",
+      dir_classify: "分类",
+      dir_exempt: "赦免",
+      features_title: "功能亮点",
+      features_subtitle: "不止是删照片那么简单",
+      feat_timer_title: "限时审判",
+      feat_timer_desc: "1-10 秒可调倒计时，超时自动执行预设操作，强制你做出决定",
+      feat_live_title: "Live Photo 支持",
+      feat_live_desc: "自动播放实况照片，支持单独设置决策时间，不错过任何细节",
+      feat_album_title: "相册分类",
+      feat_album_desc: "审判中直接将照片分类到指定相册，整理与清理一步搞定",
+      feat_random_title: "随机审判",
+      feat_random_desc: "打乱照片顺序，让清理过程充满惊喜，避免按时间线产生情感偏差",
+      feat_filter_title: "高级筛选",
+      feat_filter_desc: "按媒体类型、相册、日期范围精确筛选要审判的照片",
+      feat_hardcore_title: "硬核模式",
+      feat_hardcore_desc: "跳过回收站直接永久删除，适合追求极致清理的勇者",
+      feat_stats_title: "统计面板",
+      feat_stats_desc: "查看每周趋势、总决策数、平均决策时间等历史数据",
+      feat_achieve_title: "成就系统",
+      feat_achieve_desc: "解锁首次粉碎、连击大师、连续打卡等多种成就徽章",
+      feat_widget_title: "桌面小组件",
+      feat_widget_desc: "主屏小组件随时提醒你该清理了，一键进入审判",
+      feat_share_title: "面对面分享",
+      feat_share_desc: "局域网内创建房间，和朋友一起浏览分享最近拍的照片",
+      feat_dark_title: "深色模式",
+      feat_dark_desc: "完美适配系统浅色/深色主题，多种强调色可选",
+      combo_title: "🔥 连击 Combo",
+      combo_desc: "连续粉碎触发连击效果，看看你能冲到什么段位",
+      safety_title: "安全第一",
+      safety_subtitle: "大胆操作，我们帮你兜底",
+      safe_recycle_title: "30 天回收站",
+      safe_recycle_desc: "误删的照片保留 30 天，随时恢复到相册",
+      safe_exempt_title: "赦免名单",
+      safe_exempt_desc: "标记为赦免的照片永远不会再出现在审判队列",
+      safe_batch_title: "批量确认",
+      safe_batch_desc: "审判结束后统一确认删除，不会误触直接删",
+      safe_icloud_title: "iCloud 同步",
+      safe_icloud_desc: "设置和统计数据跨设备同步，换机无忧",
+      safe_privacy_title: "隐私保护",
+      safe_privacy_desc: "所有操作在本地完成，不上传任何照片数据",
+      safe_lang_title: "多语言支持",
+      safe_lang_desc: "简中 / 繁中 / English / 日本語 / 한국어 / Español",
+      pro_title: "一次购买，全部解锁",
+      pro_subtitle: "App Store 买断制，无订阅、无内购、无广告",
+      pro_unlimited_title: "无限审判",
+      pro_unlimited_desc: "没有每日限额，随时随地清理",
+      pro_widget_title: "桌面小组件",
+      pro_widget_desc: "主屏快速入口",
+      pro_icloud_title: "iCloud 同步",
+      pro_icloud_desc: "跨设备同步数据",
+      pro_stats_title: "完整统计",
+      pro_stats_desc: "查看全部历史数据",
+      cta_title: "用最短的时间<br>做最果断的决定",
+      cta_desc: "下载 NoPhoto，今天就开始清理你的相册",
+      footer_contact: "联系我们",
+      footer_privacy: "隐私政策",
+      _meta_title: "NoPhoto — 限时决策，快速清理相册",
+      _meta_desc: "NoPhoto 是一款基于限时决策理念的 iOS 相册清理工具。每张照片几秒做决定，告别选择困难症。"
+    },
+    "zh-Hant": {
+      hero_tagline: "限時決策，快速清理相簿<br>告別選擇困難症，幾秒做出判斷",
+      hero_cta_appstore: " App Store 下載",
+      hero_cta_more: "了解更多",
+      how_title: "怎麼用？超簡單",
+      how_subtitle: "三步搞定，相簿煥然一新",
+      step1_title: "開始審判",
+      step1_desc: "點擊首頁「開始審判」，進入限時決策模式",
+      step2_title: "快速決定",
+      step2_desc: "每張照片倒數 1-10 秒，滑動或點擊做出選擇",
+      step3_title: "確認粉碎",
+      step3_desc: "審判結束後一次性確認，批次刪除不糾結",
+      step4_title: "安全兜底",
+      step4_desc: "誤刪不怕，垃圾桶保留 30 天隨時恢復",
+      modes_title: "雙操作模式",
+      modes_subtitle: "選你順手的方式來操作",
+      mode_swipe_title: "滑動模式",
+      mode_swipe_desc: "四個方向，四種操作<br>每個方向可自訂",
+      mode_button_title: "按鈕模式",
+      mode_button_desc: "三個清晰的操作按鈕<br>點擊即決，簡單直接",
+      dir_keep: "保留",
+      dir_shred: "粉碎",
+      dir_classify: "分類",
+      dir_exempt: "赦免",
+      features_title: "功能亮點",
+      features_subtitle: "不只是刪照片那麼簡單",
+      feat_timer_title: "限時審判",
+      feat_timer_desc: "1-10 秒可調倒數，超時自動執行預設操作，強制你做出決定",
+      feat_live_title: "Live Photo 支援",
+      feat_live_desc: "自動播放實況照片，支援單獨設定決策時間，不錯過任何細節",
+      feat_album_title: "相簿分類",
+      feat_album_desc: "審判中直接將照片分類到指定相簿，整理與清理一步搞定",
+      feat_random_title: "隨機審判",
+      feat_random_desc: "打亂照片順序，讓清理過程充滿驚喜，避免按時間線產生情感偏差",
+      feat_filter_title: "進階篩選",
+      feat_filter_desc: "按媒體類型、相簿、日期範圍精確篩選要審判的照片",
+      feat_hardcore_title: "硬核模式",
+      feat_hardcore_desc: "跳過垃圾桶直接永久刪除，適合追求極致清理的勇者",
+      feat_stats_title: "統計面板",
+      feat_stats_desc: "查看每週趨勢、總決策數、平均決策時間等歷史資料",
+      feat_achieve_title: "成就系統",
+      feat_achieve_desc: "解鎖首次粉碎、連擊大師、連續打卡等多種成就徽章",
+      feat_widget_title: "桌面小工具",
+      feat_widget_desc: "主畫面小工具隨時提醒你該清理了，一鍵進入審判",
+      feat_share_title: "面對面分享",
+      feat_share_desc: "區域網路內建立房間，和朋友一起瀏覽分享最近拍的照片",
+      feat_dark_title: "深色模式",
+      feat_dark_desc: "完美適配系統淺色/深色主題，多種強調色可選",
+      combo_title: "🔥 連擊 Combo",
+      combo_desc: "連續粉碎觸發連擊效果，看看你能衝到什麼段位",
+      safety_title: "安全第一",
+      safety_subtitle: "大膽操作，我們幫你兜底",
+      safe_recycle_title: "30 天垃圾桶",
+      safe_recycle_desc: "誤刪的照片保留 30 天，隨時恢復到相簿",
+      safe_exempt_title: "赦免名單",
+      safe_exempt_desc: "標記為赦免的照片永遠不會再出現在審判佇列",
+      safe_batch_title: "批次確認",
+      safe_batch_desc: "審判結束後統一確認刪除，不會誤觸直接刪",
+      safe_icloud_title: "iCloud 同步",
+      safe_icloud_desc: "設定和統計資料跨裝置同步，換機無憂",
+      safe_privacy_title: "隱私保護",
+      safe_privacy_desc: "所有操作在本地完成，不上傳任何照片資料",
+      safe_lang_title: "多語言支援",
+      safe_lang_desc: "簡中 / 繁中 / English / 日本語 / 한국어 / Español",
+      pro_title: "一次購買，全部解鎖",
+      pro_subtitle: "App Store 買斷制，無訂閱、無內購、無廣告",
+      pro_unlimited_title: "無限審判",
+      pro_unlimited_desc: "沒有每日限額，隨時隨地清理",
+      pro_widget_title: "桌面小工具",
+      pro_widget_desc: "主畫面快速入口",
+      pro_icloud_title: "iCloud 同步",
+      pro_icloud_desc: "跨裝置同步資料",
+      pro_stats_title: "完整統計",
+      pro_stats_desc: "查看全部歷史資料",
+      cta_title: "用最短的時間<br>做最果斷的決定",
+      cta_desc: "下載 NoPhoto，今天就開始清理你的相簿",
+      footer_contact: "聯絡我們",
+      footer_privacy: "隱私政策",
+      _meta_title: "NoPhoto — 限時決策，快速清理相簿",
+      _meta_desc: "NoPhoto 是一款基於限時決策理念的 iOS 相簿清理工具。每張照片幾秒做決定，告別選擇困難症。"
+    },
+    "en": {
+      hero_tagline: "Timed decisions, quick photo cleanup<br>No more hesitation — decide in seconds",
+      hero_cta_appstore: " Download on App Store",
+      hero_cta_more: "Learn More",
+      how_title: "How It Works",
+      how_subtitle: "Three steps to a cleaner photo library",
+      step1_title: "Start Judgment",
+      step1_desc: "Tap \"Start Judgment\" on the home screen to enter timed decision mode",
+      step2_title: "Decide Fast",
+      step2_desc: "Each photo gets a 1-10 second countdown — swipe or tap to decide",
+      step3_title: "Confirm Shred",
+      step3_desc: "Review all decisions at once after the session, then batch delete",
+      step4_title: "Safety Net",
+      step4_desc: "Accidentally deleted? Recover from the trash within 30 days",
+      modes_title: "Dual Operation Modes",
+      modes_subtitle: "Choose whichever feels natural",
+      mode_swipe_title: "Swipe Mode",
+      mode_swipe_desc: "Four directions, four actions<br>Each direction is customizable",
+      mode_button_title: "Button Mode",
+      mode_button_desc: "Three clear action buttons<br>Tap to decide, simple and direct",
+      dir_keep: "Keep",
+      dir_shred: "Shred",
+      dir_classify: "Classify",
+      dir_exempt: "Exempt",
+      features_title: "Features",
+      features_subtitle: "More than just deleting photos",
+      feat_timer_title: "Timed Judgment",
+      feat_timer_desc: "Adjustable 1-10 second countdown; timeout triggers a preset action, forcing you to decide",
+      feat_live_title: "Live Photo Support",
+      feat_live_desc: "Auto-plays Live Photos with a separate decision timer so you never miss a detail",
+      feat_album_title: "Album Classification",
+      feat_album_desc: "Sort photos into albums right during judgment — organize and clean up in one step",
+      feat_random_title: "Random Judgment",
+      feat_random_desc: "Shuffle photo order to keep cleanup fresh and avoid timeline-based emotional bias",
+      feat_filter_title: "Advanced Filters",
+      feat_filter_desc: "Filter photos by media type, album, or date range before judging",
+      feat_hardcore_title: "Hardcore Mode",
+      feat_hardcore_desc: "Skip the trash and permanently delete — for the bravest cleaners",
+      feat_stats_title: "Statistics Panel",
+      feat_stats_desc: "View weekly trends, total decisions, average decision time, and more",
+      feat_achieve_title: "Achievements",
+      feat_achieve_desc: "Unlock badges for first shred, combo master, daily streaks, and more",
+      feat_widget_title: "Home Screen Widget",
+      feat_widget_desc: "A widget that reminds you to clean up and launches judgment in one tap",
+      feat_share_title: "Face-to-Face Sharing",
+      feat_share_desc: "Create a room on your local network and browse recent photos with friends",
+      feat_dark_title: "Dark Mode",
+      feat_dark_desc: "Seamless light/dark theme support with multiple accent colors",
+      combo_title: "🔥 Combo Streak",
+      combo_desc: "Chain consecutive shreds to trigger combo effects — how high can you go?",
+      safety_title: "Safety First",
+      safety_subtitle: "Be bold — we've got your back",
+      safe_recycle_title: "30-Day Trash",
+      safe_recycle_desc: "Accidentally deleted photos are kept for 30 days and can be restored anytime",
+      safe_exempt_title: "Exemption List",
+      safe_exempt_desc: "Exempted photos will never appear in the judgment queue again",
+      safe_batch_title: "Batch Confirmation",
+      safe_batch_desc: "Deletions are confirmed all at once after the session — no accidental taps",
+      safe_icloud_title: "iCloud Sync",
+      safe_icloud_desc: "Sync settings and stats across devices — switch phones worry-free",
+      safe_privacy_title: "Privacy Protection",
+      safe_privacy_desc: "Everything happens on-device — no photo data is ever uploaded",
+      safe_lang_title: "Multi-Language",
+      safe_lang_desc: "简中 / 繁中 / English / 日本語 / 한국어 / Español",
+      pro_title: "Buy Once, Unlock Everything",
+      pro_subtitle: "One-time purchase on the App Store — no subscriptions, no IAP, no ads",
+      pro_unlimited_title: "Unlimited Judgment",
+      pro_unlimited_desc: "No daily limits — clean up anytime, anywhere",
+      pro_widget_title: "Home Screen Widget",
+      pro_widget_desc: "Quick access from your home screen",
+      pro_icloud_title: "iCloud Sync",
+      pro_icloud_desc: "Sync data across devices",
+      pro_stats_title: "Full Statistics",
+      pro_stats_desc: "View all historical data",
+      cta_title: "The least time.<br>The boldest decisions.",
+      cta_desc: "Download NoPhoto and start cleaning your photo library today",
+      footer_contact: "Contact Us",
+      footer_privacy: "Privacy Policy",
+      _meta_title: "NoPhoto — Timed Decisions, Quick Photo Cleanup",
+      _meta_desc: "NoPhoto is an iOS photo cleanup tool based on timed decision-making. Decide on each photo in seconds and say goodbye to indecision."
+    },
+    "ja": {
+      hero_tagline: "制限時間で即決断、写真を素早く整理<br>迷わず数秒で判断しよう",
+      hero_cta_appstore: " App Store でダウンロード",
+      hero_cta_more: "詳しく見る",
+      how_title: "使い方はカンタン",
+      how_subtitle: "3ステップでアルバムをすっきり",
+      step1_title: "審判開始",
+      step1_desc: "ホーム画面の「審判開始」をタップして、制限時間モードへ",
+      step2_title: "即決断",
+      step2_desc: "写真ごとに 1-10 秒のカウントダウン、スワイプかタップで決定",
+      step3_title: "シュレッド確認",
+      step3_desc: "審判終了後にまとめて確認、一括削除で迷わない",
+      step4_title: "セーフティネット",
+      step4_desc: "間違って削除しても大丈夫、ゴミ箱に 30 日間保持",
+      modes_title: "2つの操作モード",
+      modes_subtitle: "使いやすい方を選ぼう",
+      mode_swipe_title: "スワイプモード",
+      mode_swipe_desc: "4方向で4つの操作<br>各方向はカスタマイズ可能",
+      mode_button_title: "ボタンモード",
+      mode_button_desc: "3つの明確なボタン<br>タップするだけ、シンプルで直感的",
+      dir_keep: "保持",
+      dir_shred: "シュレッド",
+      dir_classify: "分類",
+      dir_exempt: "免除",
+      features_title: "機能ハイライト",
+      features_subtitle: "写真を削除するだけじゃない",
+      feat_timer_title: "制限時間審判",
+      feat_timer_desc: "1-10 秒の調整可能なカウントダウン、タイムアウトで自動実行、決断を強制",
+      feat_live_title: "Live Photo 対応",
+      feat_live_desc: "Live Photo を自動再生、個別のタイマー設定で細部も見逃さない",
+      feat_album_title: "アルバム分類",
+      feat_album_desc: "審判中に写真をアルバムへ直接分類、整理と片付けを同時に",
+      feat_random_title: "ランダム審判",
+      feat_random_desc: "写真の順番をシャッフル、時系列の感情的バイアスを避ける",
+      feat_filter_title: "高度なフィルター",
+      feat_filter_desc: "メディアタイプ、アルバム、日付範囲で審判する写真を絞り込み",
+      feat_hardcore_title: "ハードコアモード",
+      feat_hardcore_desc: "ゴミ箱をスキップして即座に永久削除、究極の整理を求める勇者向け",
+      feat_stats_title: "統計パネル",
+      feat_stats_desc: "週間トレンド、総決断数、平均決断時間などの履歴データを表示",
+      feat_achieve_title: "実績システム",
+      feat_achieve_desc: "初シュレッド、コンボマスター、連続ログインなど多数のバッジを解除",
+      feat_widget_title: "ホーム画面ウィジェット",
+      feat_widget_desc: "ウィジェットが整理のリマインダー、ワンタップで審判開始",
+      feat_share_title: "対面シェア",
+      feat_share_desc: "ローカルネットワークでルームを作成、友達と最近の写真を閲覧・共有",
+      feat_dark_title: "ダークモード",
+      feat_dark_desc: "ライト/ダークテーマに完全対応、複数のアクセントカラーから選択",
+      combo_title: "🔥 コンボストリーク",
+      combo_desc: "連続シュレッドでコンボ発動、どのランクまで到達できる？",
+      safety_title: "安全第一",
+      safety_subtitle: "大胆に操作しよう、バックアップはお任せ",
+      safe_recycle_title: "30 日間ゴミ箱",
+      safe_recycle_desc: "誤って削除した写真は 30 日間保持、いつでも復元可能",
+      safe_exempt_title: "免除リスト",
+      safe_exempt_desc: "免除された写真は審判キューに二度と表示されません",
+      safe_batch_title: "一括確認",
+      safe_batch_desc: "セッション終了後にまとめて削除確認、誤タップの心配なし",
+      safe_icloud_title: "iCloud 同期",
+      safe_icloud_desc: "設定と統計をデバイス間で同期、機種変更も安心",
+      safe_privacy_title: "プライバシー保護",
+      safe_privacy_desc: "すべての処理はデバイス上で完結、写真データのアップロードは一切なし",
+      safe_lang_title: "多言語対応",
+      safe_lang_desc: "简中 / 繁中 / English / 日本語 / 한국어 / Español",
+      pro_title: "一度の購入ですべて解放",
+      pro_subtitle: "App Store 買い切り制 — サブスクなし、課金なし、広告なし",
+      pro_unlimited_title: "無制限審判",
+      pro_unlimited_desc: "1日の上限なし、いつでもどこでも整理",
+      pro_widget_title: "ホーム画面ウィジェット",
+      pro_widget_desc: "ホーム画面からすぐアクセス",
+      pro_icloud_title: "iCloud 同期",
+      pro_icloud_desc: "デバイス間でデータを同期",
+      pro_stats_title: "完全な統計",
+      pro_stats_desc: "すべての履歴データを表示",
+      cta_title: "最短の時間で<br>最も大胆な決断を",
+      cta_desc: "NoPhoto をダウンロードして、今日からアルバムを整理しよう",
+      footer_contact: "お問い合わせ",
+      footer_privacy: "プライバシーポリシー",
+      _meta_title: "NoPhoto — 制限時間で即決断、写真を素早く整理",
+      _meta_desc: "NoPhoto は制限時間による意思決定に基づいた iOS 写真整理アプリ。数秒で各写真を判断し、優柔不断にさよなら。"
+    },
+    "ko": {
+      hero_tagline: "시간 제한 결정, 빠른 사진 정리<br>선택 장애 탈출, 몇 초 만에 판단",
+      hero_cta_appstore: " App Store 다운로드",
+      hero_cta_more: "더 알아보기",
+      how_title: "이렇게 쉬워요",
+      how_subtitle: "세 단계로 앨범을 깔끔하게",
+      step1_title: "심판 시작",
+      step1_desc: "홈 화면에서 「심판 시작」을 탭하여 시간 제한 결정 모드 진입",
+      step2_title: "빠르게 결정",
+      step2_desc: "사진마다 1-10초 카운트다운, 스와이프 또는 탭으로 선택",
+      step3_title: "파쇄 확인",
+      step3_desc: "심판 종료 후 한 번에 확인, 일괄 삭제로 고민 끝",
+      step4_title: "안전 보장",
+      step4_desc: "실수로 삭제해도 걱정 없어요, 휴지통에 30일간 보관",
+      modes_title: "두 가지 조작 모드",
+      modes_subtitle: "편한 방식을 선택하세요",
+      mode_swipe_title: "스와이프 모드",
+      mode_swipe_desc: "네 방향, 네 가지 동작<br>각 방향 맞춤 설정 가능",
+      mode_button_title: "버튼 모드",
+      mode_button_desc: "세 개의 명확한 버튼<br>탭하면 결정, 간단 명료",
+      dir_keep: "보관",
+      dir_shred: "파쇄",
+      dir_classify: "분류",
+      dir_exempt: "면제",
+      features_title: "주요 기능",
+      features_subtitle: "단순한 사진 삭제 그 이상",
+      feat_timer_title: "시간 제한 심판",
+      feat_timer_desc: "1-10초 조절 가능한 카운트다운, 시간 초과 시 자동 실행으로 결정을 강제",
+      feat_live_title: "Live Photo 지원",
+      feat_live_desc: "Live Photo 자동 재생, 별도 타이머 설정으로 디테일까지 확인",
+      feat_album_title: "앨범 분류",
+      feat_album_desc: "심판 중 사진을 앨범으로 바로 분류, 정리와 삭제를 한 번에",
+      feat_random_title: "랜덤 심판",
+      feat_random_desc: "사진 순서를 섞어 시간순 감정 편향을 방지, 신선한 정리 경험",
+      feat_filter_title: "고급 필터",
+      feat_filter_desc: "미디어 유형, 앨범, 날짜 범위로 심판할 사진을 정밀하게 필터링",
+      feat_hardcore_title: "하드코어 모드",
+      feat_hardcore_desc: "휴지통을 건너뛰고 영구 삭제, 극한의 정리를 추구하는 용사용",
+      feat_stats_title: "통계 패널",
+      feat_stats_desc: "주간 트렌드, 총 결정 수, 평균 결정 시간 등 히스토리 데이터 확인",
+      feat_achieve_title: "업적 시스템",
+      feat_achieve_desc: "첫 파쇄, 콤보 마스터, 연속 출석 등 다양한 업적 배지 잠금 해제",
+      feat_widget_title: "홈 화면 위젯",
+      feat_widget_desc: "위젯으로 정리 알림, 한 번의 탭으로 심판 시작",
+      feat_share_title: "대면 공유",
+      feat_share_desc: "로컬 네트워크에서 방을 만들어 친구와 최근 사진 함께 감상",
+      feat_dark_title: "다크 모드",
+      feat_dark_desc: "라이트/다크 테마 완벽 지원, 다양한 강조 색상 선택 가능",
+      combo_title: "🔥 콤보 스트릭",
+      combo_desc: "연속 파쇄로 콤보 효과 발동, 어디까지 올라갈 수 있을까?",
+      safety_title: "안전 최우선",
+      safety_subtitle: "과감하게 조작하세요, 백업은 저희가 책임져요",
+      safe_recycle_title: "30일 휴지통",
+      safe_recycle_desc: "실수로 삭제한 사진도 30일간 보관, 언제든 복원 가능",
+      safe_exempt_title: "면제 목록",
+      safe_exempt_desc: "면제된 사진은 심판 대기열에 다시 나타나지 않아요",
+      safe_batch_title: "일괄 확인",
+      safe_batch_desc: "세션 종료 후 한꺼번에 삭제 확인, 실수 탭 걱정 없음",
+      safe_icloud_title: "iCloud 동기화",
+      safe_icloud_desc: "설정과 통계를 기기 간 동기화, 기기 변경도 걱정 없이",
+      safe_privacy_title: "개인정보 보호",
+      safe_privacy_desc: "모든 작업은 기기에서 처리, 사진 데이터를 업로드하지 않아요",
+      safe_lang_title: "다국어 지원",
+      safe_lang_desc: "简中 / 繁中 / English / 日本語 / 한국어 / Español",
+      pro_title: "한 번 구매, 전부 잠금 해제",
+      pro_subtitle: "App Store 일회성 구매 — 구독 없음, 인앱 결제 없음, 광고 없음",
+      pro_unlimited_title: "무제한 심판",
+      pro_unlimited_desc: "일일 제한 없이 언제 어디서든 정리",
+      pro_widget_title: "홈 화면 위젯",
+      pro_widget_desc: "홈 화면에서 바로 접근",
+      pro_icloud_title: "iCloud 동기화",
+      pro_icloud_desc: "기기 간 데이터 동기화",
+      pro_stats_title: "전체 통계",
+      pro_stats_desc: "모든 히스토리 데이터 확인",
+      cta_title: "가장 짧은 시간에<br>가장 과감한 결정을",
+      cta_desc: "NoPhoto를 다운로드하고 오늘부터 앨범을 정리하세요",
+      footer_contact: "문의하기",
+      footer_privacy: "개인정보 처리방침",
+      _meta_title: "NoPhoto — 시간 제한 결정, 빠른 사진 정리",
+      _meta_desc: "NoPhoto는 시간 제한 의사결정 기반의 iOS 사진 정리 앱입니다. 몇 초 만에 각 사진을 결정하고 선택 장애에 작별을 고하세요."
+    },
+    "es": {
+      hero_tagline: "Decisiones cronometradas, limpieza rápida de fotos<br>Sin más indecisión — decide en segundos",
+      hero_cta_appstore: " Descargar en App Store",
+      hero_cta_more: "Saber más",
+      how_title: "¿Cómo funciona?",
+      how_subtitle: "Tres pasos para un álbum impecable",
+      step1_title: "Iniciar Juicio",
+      step1_desc: "Toca \"Iniciar Juicio\" en la pantalla principal para entrar en modo cronometrado",
+      step2_title: "Decide rápido",
+      step2_desc: "Cada foto tiene una cuenta regresiva de 1-10 segundos — desliza o toca para decidir",
+      step3_title: "Confirmar trituración",
+      step3_desc: "Revisa todas las decisiones juntas al final y elimina en lote",
+      step4_title: "Red de seguridad",
+      step4_desc: "¿Eliminaste por error? Recupérala de la papelera en 30 días",
+      modes_title: "Dos modos de operación",
+      modes_subtitle: "Elige el que te resulte más cómodo",
+      mode_swipe_title: "Modo deslizar",
+      mode_swipe_desc: "Cuatro direcciones, cuatro acciones<br>Cada dirección es personalizable",
+      mode_button_title: "Modo botones",
+      mode_button_desc: "Tres botones de acción claros<br>Toca para decidir, simple y directo",
+      dir_keep: "Conservar",
+      dir_shred: "Triturar",
+      dir_classify: "Clasificar",
+      dir_exempt: "Exentar",
+      features_title: "Funcionalidades",
+      features_subtitle: "Mucho más que borrar fotos",
+      feat_timer_title: "Juicio cronometrado",
+      feat_timer_desc: "Cuenta regresiva ajustable de 1-10 segundos; al agotar el tiempo se ejecuta la acción predeterminada",
+      feat_live_title: "Soporte Live Photo",
+      feat_live_desc: "Reproduce automáticamente Live Photos con un temporizador independiente para no perder detalles",
+      feat_album_title: "Clasificación por álbum",
+      feat_album_desc: "Clasifica fotos en álbumes durante el juicio — organiza y limpia en un solo paso",
+      feat_random_title: "Juicio aleatorio",
+      feat_random_desc: "Mezcla el orden de las fotos para evitar sesgos emocionales por línea de tiempo",
+      feat_filter_title: "Filtros avanzados",
+      feat_filter_desc: "Filtra fotos por tipo de medio, álbum o rango de fechas antes de juzgar",
+      feat_hardcore_title: "Modo hardcore",
+      feat_hardcore_desc: "Salta la papelera y elimina permanentemente — para los más valientes",
+      feat_stats_title: "Panel de estadísticas",
+      feat_stats_desc: "Ve tendencias semanales, decisiones totales, tiempo promedio de decisión y más",
+      feat_achieve_title: "Sistema de logros",
+      feat_achieve_desc: "Desbloquea insignias por primera trituración, maestro del combo, rachas diarias y más",
+      feat_widget_title: "Widget de pantalla de inicio",
+      feat_widget_desc: "Un widget que te recuerda limpiar y abre el juicio con un toque",
+      feat_share_title: "Compartir cara a cara",
+      feat_share_desc: "Crea una sala en tu red local y navega fotos recientes con amigos",
+      feat_dark_title: "Modo oscuro",
+      feat_dark_desc: "Compatible con temas claro/oscuro del sistema con múltiples colores de acento",
+      combo_title: "🔥 Racha de Combo",
+      combo_desc: "Encadena trituraciones consecutivas para activar efectos de combo — ¿hasta dónde puedes llegar?",
+      safety_title: "Seguridad ante todo",
+      safety_subtitle: "Sé audaz — nosotros te cubrimos las espaldas",
+      safe_recycle_title: "Papelera de 30 días",
+      safe_recycle_desc: "Las fotos eliminadas accidentalmente se mantienen 30 días y se pueden restaurar",
+      safe_exempt_title: "Lista de exentos",
+      safe_exempt_desc: "Las fotos exentas nunca volverán a aparecer en la cola de juicio",
+      safe_batch_title: "Confirmación en lote",
+      safe_batch_desc: "Las eliminaciones se confirman todas juntas tras la sesión — sin toques accidentales",
+      safe_icloud_title: "Sincronización iCloud",
+      safe_icloud_desc: "Sincroniza ajustes y estadísticas entre dispositivos — cambia de teléfono sin preocupaciones",
+      safe_privacy_title: "Protección de privacidad",
+      safe_privacy_desc: "Todo sucede en el dispositivo — nunca se suben datos de fotos",
+      safe_lang_title: "Multiidioma",
+      safe_lang_desc: "简中 / 繁中 / English / 日本語 / 한국어 / Español",
+      pro_title: "Compra una vez, desbloquea todo",
+      pro_subtitle: "Compra única en App Store — sin suscripciones, sin compras integradas, sin anuncios",
+      pro_unlimited_title: "Juicio ilimitado",
+      pro_unlimited_desc: "Sin límites diarios — limpia cuando y donde quieras",
+      pro_widget_title: "Widget de pantalla de inicio",
+      pro_widget_desc: "Acceso rápido desde tu pantalla de inicio",
+      pro_icloud_title: "Sincronización iCloud",
+      pro_icloud_desc: "Sincroniza datos entre dispositivos",
+      pro_stats_title: "Estadísticas completas",
+      pro_stats_desc: "Consulta todos los datos históricos",
+      cta_title: "El menor tiempo.<br>Las decisiones más audaces.",
+      cta_desc: "Descarga NoPhoto y empieza a limpiar tu álbum de fotos hoy",
+      footer_contact: "Contáctanos",
+      footer_privacy: "Política de Privacidad",
+      _meta_title: "NoPhoto — Decisiones cronometradas, limpieza rápida de fotos",
+      _meta_desc: "NoPhoto es una herramienta de limpieza de fotos para iOS basada en la toma de decisiones con tiempo limitado. Decide sobre cada foto en segundos."
+    }
+  };
+
+  var langNames = {
+    "zh-Hans": "简体中文",
+    "zh-Hant": "繁體中文",
+    "en": "English",
+    "ja": "日本語",
+    "ko": "한국어",
+    "es": "Español"
+  };
+
+  var supportedLangs = ["zh-Hans","zh-Hant","en","ja","ko","es"];
+
+  function detectLang() {
+    // 1. URL hash
+    var hash = location.hash.replace("#","");
+    if (hash && T[hash]) return hash;
+    // 2. localStorage
+    var stored = localStorage.getItem("nophoto-lang");
+    if (stored && T[stored]) return stored;
+    // 3. Browser language
+    var nav = navigator.language || navigator.userLanguage || "";
+    // Exact match first
+    if (T[nav]) return nav;
+    // Map common browser locale codes
+    if (/^zh.*(Hant|TW|HK|MO)/i.test(nav)) return "zh-Hant";
+    if (/^zh/i.test(nav)) return "zh-Hans";
+    if (/^ja/i.test(nav)) return "ja";
+    if (/^ko/i.test(nav)) return "ko";
+    if (/^es/i.test(nav)) return "es";
+    if (/^en/i.test(nav)) return "en";
+    // 4. Fallback
+    return "zh-Hans";
+  }
+
+  function applyLang(lang) {
+    if (!T[lang]) lang = "zh-Hans";
+    var strings = T[lang];
+    // Swap text
+    var els = document.querySelectorAll("[data-i18n]");
+    for (var i = 0; i < els.length; i++) {
+      var key = els[i].getAttribute("data-i18n");
+      if (strings[key] !== undefined) {
+        els[i].innerHTML = strings[key];
+      }
+    }
+    // Update <html lang>
+    document.documentElement.lang = lang;
+    // Update <title> and meta description
+    if (strings._meta_title) document.title = strings._meta_title;
+    var metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc && strings._meta_desc) metaDesc.setAttribute("content", strings._meta_desc);
+    // Update privacy link hash
+    var privacyLink = document.getElementById("privacyLink");
+    if (privacyLink) privacyLink.href = "privacy.html#" + lang;
+    // Update lang label
+    var label = document.getElementById("langLabel");
+    if (label) label.textContent = langNames[lang] || lang;
+    // Update active state
+    var opts = document.querySelectorAll(".lang-option");
+    for (var j = 0; j < opts.length; j++) {
+      opts[j].classList.toggle("active", opts[j].getAttribute("data-lang") === lang);
+    }
+    // Update hash
+    history.replaceState(null, "", "#" + lang);
+    // Store preference
+    localStorage.setItem("nophoto-lang", lang);
+  }
+
+  // Language switcher toggle
+  var btn = document.getElementById("langBtn");
+  var menu = document.getElementById("langMenu");
+
+  btn.addEventListener("click", function(e) {
+    e.stopPropagation();
+    var isOpen = menu.classList.toggle("show");
+    btn.classList.toggle("open", isOpen);
+  });
+
+  document.addEventListener("click", function() {
+    menu.classList.remove("show");
+    btn.classList.remove("open");
+  });
+
+  menu.addEventListener("click", function(e) {
+    e.stopPropagation();
+  });
+
+  // Language option clicks
+  var opts = document.querySelectorAll(".lang-option");
+  for (var k = 0; k < opts.length; k++) {
+    opts[k].addEventListener("click", function() {
+      var lang = this.getAttribute("data-lang");
+      applyLang(lang);
+      menu.classList.remove("show");
+      btn.classList.remove("open");
+    });
+  }
+
+  // Hash change support
+  window.addEventListener("hashchange", function() {
+    var hash = location.hash.replace("#","");
+    if (T[hash]) applyLang(hash);
+  });
+
+  // Init
+  applyLang(detectLang());
+})();
+</script>
 
 </body>
 </html>

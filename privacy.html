@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NoPhoto — 隐私政策</title>
-<meta name="description" content="NoPhoto 隐私政策 — 了解我们如何保护您的数据和隐私。">
+<title>NoPhoto — Privacy Policy</title>
+<meta name="description" content="NoPhoto Privacy Policy — Learn how we protect your data and privacy.">
 <style>
   *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
   :root{--bg:#0A0A0F;--card:#1A1A26;--purple:#6C5CE7;--purple-light:#A29BFE;--text:#E8E8F0;--text2:#9090A8;--radius:12px}
@@ -13,10 +13,19 @@
   .container{max-width:760px;margin:0 auto}
   a{color:var(--purple-light);text-decoration:none}
   a:hover{text-decoration:underline}
-  .back{display:inline-flex;align-items:center;gap:.4rem;margin-bottom:2rem;color:var(--text2);font-size:.9rem}
-  .lang-switch{float:right;margin-top:.25rem}
-  .lang-switch a{padding:.4rem .8rem;border-radius:6px;font-size:.85rem;border:1px solid rgba(255,255,255,.1)}
-  .lang-switch a:hover{border-color:var(--purple-light);text-decoration:none}
+  .top-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:2rem;flex-wrap:wrap;gap:.75rem}
+  .back{display:inline-flex;align-items:center;gap:.4rem;color:var(--text2);font-size:.9rem}
+  .lang-switcher{display:flex;gap:.4rem;flex-wrap:wrap}
+  .lang-switcher button{
+    padding:.35rem .7rem;border-radius:6px;font-size:.8rem;
+    border:1px solid rgba(255,255,255,.1);background:transparent;
+    color:var(--text2);cursor:pointer;transition:all .2s;
+    font-family:inherit;line-height:1.4;
+  }
+  .lang-switcher button:hover{border-color:var(--purple-light);color:var(--purple-light)}
+  .lang-switcher button.active{
+    background:var(--purple);color:#fff;border-color:var(--purple);
+  }
   h1{font-size:2rem;font-weight:700;margin-bottom:.25rem}
   .updated{color:var(--text2);font-size:.9rem;margin-bottom:2.5rem}
   h2{font-size:1.25rem;font-weight:600;margin-top:2.5rem;margin-bottom:.75rem;padding-bottom:.4rem;border-bottom:1px solid rgba(255,255,255,.06)}
@@ -31,14 +40,32 @@
   th,td{text-align:left;padding:.6rem .75rem;border-bottom:1px solid rgba(255,255,255,.06);font-size:.9rem}
   th{color:var(--text2);font-weight:600;font-size:.85rem;text-transform:uppercase;letter-spacing:.03em}
   footer{margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.06);color:var(--text2);font-size:.85rem;text-align:center}
+  .lang-section{display:none}
+  .lang-section.active{display:block}
+  @media(max-width:480px){
+    .lang-switcher button{padding:.3rem .55rem;font-size:.75rem}
+    h1{font-size:1.6rem}
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
 
-<a href="index.html" class="back">&larr; 返回首页</a>
-<div class="lang-switch"><a href="privacy-en.html">English</a></div>
+<div class="top-bar">
+  <a href="index.html" class="back">&larr; <span data-back></span></a>
+  <div class="lang-switcher">
+    <button data-lang="zh-Hans">简体中文</button>
+    <button data-lang="zh-Hant">繁體中文</button>
+    <button data-lang="en">English</button>
+    <button data-lang="ja">日本語</button>
+    <button data-lang="ko">한국어</button>
+    <button data-lang="es">Español</button>
+  </div>
+</div>
+
+<!-- ==================== zh-Hans ==================== -->
+<div class="lang-section" id="lang-zh-Hans">
 
 <h1>隐私政策</h1>
 <p class="updated">生效日期：2026 年 4 月 6 日 &nbsp;|&nbsp; 最后更新：2026 年 4 月 6 日</p>
@@ -59,13 +86,14 @@
 </ul>
 
 <h3>1.2 存储在您设备上的数据</h3>
-<p>以下数据仅存储在您的设备本地（以及您选择开启的 iCloud 同步）：</p>
+<p>以下数据存储在您的设备本地；其中标注为 iCloud 的项目会在您主动开启 iCloud 同步后参与同步：</p>
 <table>
   <tr><th>数据类型</th><th>用途</th><th>存储位置</th></tr>
   <tr><td>应用设置</td><td>保存您的偏好配置（决策时间、操作模式等）</td><td>设备本地 / iCloud</td></tr>
-  <tr><td>统计数据</td><td>展示清理历史和成就进度</td><td>设备本地 / iCloud</td></tr>
+  <tr><td>统计与成就数据</td><td>展示清理历史、连击记录和成就进度</td><td>设备本地 / iCloud</td></tr>
   <tr><td>赦免名单</td><td>记录您标记为赦免的照片标识符</td><td>设备本地 / iCloud</td></tr>
-  <tr><td>成就记录</td><td>追踪您解锁的成就徽章</td><td>设备本地 / iCloud</td></tr>
+  <tr><td>分类记录与自定义相册元数据</td><td>保留已分类照片标识和应用内相册信息</td><td>设备本地 / iCloud</td></tr>
+  <tr><td>本地回收副本</td><td>为非硬核模式下删除的照片提供应用内恢复能力</td><td>仅设备本地</td></tr>
 </table>
 
 <h2>2. 照片库访问</h2>
@@ -81,16 +109,16 @@
 <h2>3. iCloud 同步</h2>
 <p>如果您选择开启 iCloud 同步功能：</p>
 <ul>
-  <li>同步的数据仅包括应用设置、统计数据和赦免名单，<strong>不包含任何照片内容</strong>。</li>
-  <li>数据通过 Apple 的 <strong>CloudKit</strong> 框架传输，使用 Apple 的端到端加密基础设施。</li>
-  <li>同步数据存储在您个人的 iCloud 账户中，我们无法访问。</li>
+  <li>同步的数据可能包括应用设置、统计与成就数据、赦免名单、分类记录以及应用内自定义相册元数据，<strong>不包含任何照片内容</strong>。</li>
+  <li>数据通过 Apple 的 <strong>iCloud 键值存储服务（NSUbiquitousKeyValueStore）</strong> 传输，并受 Apple iCloud 基础设施的传输加密和存储加密保护。</li>
+  <li>同步数据存储在您个人的 iCloud 账户中，我们无法直接访问。</li>
   <li>您可以随时在应用设置中关闭 iCloud 同步。</li>
 </ul>
 
 <h2>4. 面对面分享功能</h2>
 <p>本应用提供局域网内的照片分享功能：</p>
 <ul>
-  <li>照片数据仅通过<strong>本地 Wi-Fi 网络</strong>在设备间直接传输，不经过任何外部服务器。</li>
+  <li>照片数据仅通过<strong>本地 Wi-Fi 网络</strong>在设备间点对点传输，并使用 Apple 提供的加密会话，不经过任何外部服务器。</li>
   <li>分享功能默认会压缩照片并移除位置信息以保护隐私（可在设置中调整）。</li>
   <li>分享会话结束后，传输的数据不会被保留在中间节点上。</li>
 </ul>
@@ -110,7 +138,7 @@
   <li>崩溃报告工具（Crashlytics、Sentry 等）</li>
   <li>社交媒体 SDK</li>
 </ul>
-<p>我们仅使用 Apple 提供的系统框架（PhotoKit、CloudKit、StoreKit）。</p>
+<p>我们仅使用 Apple 提供的系统框架和服务（PhotoKit、StoreKit、NSUbiquitousKeyValueStore 等）。</p>
 
 <h2>7. 数据安全</h2>
 <ul>
@@ -126,7 +154,7 @@
 <p>由于我们不在任何服务器上存储您的数据，您可以通过以下方式完全删除所有应用数据：</p>
 <ul>
   <li><strong>删除应用</strong> — 卸载 NoPhoto 将移除设备上的所有应用数据。</li>
-  <li><strong>应用内清除</strong> — 在"设置 &gt; 数据管理 &gt; 清除所有数据"中一键删除本地和 iCloud 上的全部数据。</li>
+  <li><strong>应用内清除</strong> — 在"设置 &gt; 数据管理 &gt; 清除所有数据"中可清除设置、统计数据、赦免名单、成就记录及 iCloud 同步键值数据；该操作不会删除分类记录、自定义相册元数据或本地回收副本。</li>
   <li><strong>iCloud 数据</strong> — 您可以在"系统设置 &gt; Apple ID &gt; iCloud &gt; 管理存储"中手动删除 NoPhoto 的 iCloud 数据。</li>
 </ul>
 
@@ -139,11 +167,636 @@
   <li>邮箱：<a href="mailto:kinyokun@163.com">kinyokun@163.com</a></li>
 </ul>
 
+</div>
+
+<!-- ==================== zh-Hant ==================== -->
+<div class="lang-section" id="lang-zh-Hant">
+
+<h1>隱私政策</h1>
+<p class="updated">生效日期：2026 年 4 月 6 日 &nbsp;|&nbsp; 最後更新：2026 年 4 月 6 日</p>
+
+<div class="highlight">
+  <p><strong>核心承諾：NoPhoto 不會收集、上傳或分享您的任何照片和個人資料。所有照片處理均在您的裝置上本地完成。</strong></p>
+</div>
+
+<p>NoPhoto（以下簡稱「本應用程式」）由 kinyo（以下簡稱「我們」）開發和營運。我們深知隱私的重要性，本政策旨在向您說明我們在您使用本應用程式時如何處理資訊。</p>
+
+<h2>1. 我們收集的資訊</h2>
+
+<h3>1.1 我們不收集的資訊</h3>
+<ul>
+  <li><strong>照片和影片內容</strong> — 本應用程式不會讀取、分析、上傳或以任何方式將您的照片傳輸到外部伺服器。所有照片操作（瀏覽、刪除、分類）均透過 Apple 的 PhotoKit 框架在裝置本地執行。</li>
+  <li><strong>個人身分資訊</strong> — 我們不收集您的姓名、電子郵件、電話號碼、地理位置或其他任何可識別個人身分的資訊。</li>
+  <li><strong>使用行為資料</strong> — 我們不使用任何第三方分析 SDK 或追蹤工具來收集您的使用行為。</li>
+</ul>
+
+<h3>1.2 儲存在您裝置上的資料</h3>
+<p>以下資料儲存在您的裝置本地；其中標註為 iCloud 的項目會在您主動開啟 iCloud 同步後參與同步：</p>
+<table>
+  <tr><th>資料類型</th><th>用途</th><th>儲存位置</th></tr>
+  <tr><td>應用程式設定</td><td>儲存您的偏好設定（決策時間、操作模式等）</td><td>裝置本地 / iCloud</td></tr>
+  <tr><td>統計與成就資料</td><td>顯示清理歷史、連擊紀錄和成就進度</td><td>裝置本地 / iCloud</td></tr>
+  <tr><td>赦免名單</td><td>記錄您標記為赦免的照片識別碼</td><td>裝置本地 / iCloud</td></tr>
+  <tr><td>分類紀錄與自訂相簿中繼資料</td><td>保留已分類照片識別碼和應用程式內相簿資訊</td><td>裝置本地 / iCloud</td></tr>
+  <tr><td>本地回收副本</td><td>為非硬核模式下刪除的照片提供應用程式內復原能力</td><td>僅裝置本地</td></tr>
+</table>
+
+<h2>2. 照片圖庫存取</h2>
+<p>本應用程式需要存取您的照片圖庫才能正常運作。具體說明如下：</p>
+<ul>
+  <li>我們透過 Apple 的 <strong>PhotoKit</strong> 框架存取照片圖庫，這是 Apple 提供的標準系統介面。</li>
+  <li>您可以選擇授予<strong>完整存取</strong>或<strong>有限存取</strong>權限。有限存取模式下，僅您選擇的照片對本應用程式可見。</li>
+  <li>照片的刪除操作會呼叫系統標準介面，刪除前 iOS 系統會彈出確認對話框，需要您再次確認。</li>
+  <li>被刪除的照片會進入 iOS 系統的「最近刪除」資料夾，保留 30 天後自動永久刪除。</li>
+  <li>您可以隨時在「系統設定 &gt; NoPhoto」中修改或撤銷照片圖庫存取權限。</li>
+</ul>
+
+<h2>3. iCloud 同步</h2>
+<p>如果您選擇開啟 iCloud 同步功能：</p>
+<ul>
+  <li>同步的資料可能包括應用程式設定、統計與成就資料、赦免名單、分類紀錄以及應用程式內自訂相簿中繼資料，<strong>不包含任何照片內容</strong>。</li>
+  <li>資料透過 Apple 的 <strong>iCloud 鍵值儲存服務（NSUbiquitousKeyValueStore）</strong> 傳輸，並受 Apple iCloud 基礎設施的傳輸加密和儲存加密保護。</li>
+  <li>同步資料儲存在您個人的 iCloud 帳號中，我們無法直接存取。</li>
+  <li>您可以隨時在應用程式設定中關閉 iCloud 同步。</li>
+</ul>
+
+<h2>4. 面對面分享功能</h2>
+<p>本應用程式提供區域網路內的照片分享功能：</p>
+<ul>
+  <li>照片資料僅透過<strong>本地 Wi-Fi 網路</strong>在裝置間點對點傳輸，並使用 Apple 提供的加密工作階段，不經過任何外部伺服器。</li>
+  <li>分享功能預設會壓縮照片並移除位置資訊以保護隱私（可在設定中調整）。</li>
+  <li>分享工作階段結束後，傳輸的資料不會被保留在中間節點上。</li>
+</ul>
+
+<h2>5. 付費模式</h2>
+<p>本應用程式為 App Store 買斷制付費應用程式：</p>
+<ul>
+  <li>購買透過 <strong>Apple 的 App Store</strong> 完成，我們不會接觸您的付款資訊（信用卡號、Apple ID 密碼等）。</li>
+  <li>應用程式內<strong>不提供任何訂閱或應用程式內購買</strong>，一次購買即可使用全部功能。</li>
+</ul>
+
+<h2>6. 第三方服務</h2>
+<p>本應用程式<strong>不整合</strong>任何第三方 SDK，包括但不限於：</p>
+<ul>
+  <li>分析工具（Google Analytics、Firebase Analytics 等）</li>
+  <li>廣告網路（AdMob、Facebook Ads 等）</li>
+  <li>當機回報工具（Crashlytics、Sentry 等）</li>
+  <li>社群媒體 SDK</li>
+</ul>
+<p>我們僅使用 Apple 提供的系統框架和服務（PhotoKit、StoreKit、NSUbiquitousKeyValueStore 等）。</p>
+
+<h2>7. 資料安全</h2>
+<ul>
+  <li>所有應用程式資料使用 iOS 系統級加密儲存在裝置上。</li>
+  <li>iCloud 同步資料受 Apple 的傳輸加密和儲存加密保護。</li>
+  <li>本應用程式不建立任何與外部伺服器的網路連線（iCloud 同步和 iCloud 照片下載除外，這些透過 Apple 的安全基礎設施完成）。</li>
+</ul>
+
+<h2>8. 兒童隱私</h2>
+<p>本應用程式不面向 13 歲以下的兒童。我們不會故意收集兒童的個人資訊。由於本應用程式不收集任何個人資訊，因此不存在兒童資料收集的風險。</p>
+
+<h2>9. 資料刪除</h2>
+<p>由於我們不在任何伺服器上儲存您的資料，您可以透過以下方式完全刪除所有應用程式資料：</p>
+<ul>
+  <li><strong>刪除應用程式</strong> — 解除安裝 NoPhoto 將移除裝置上的所有應用程式資料。</li>
+  <li><strong>應用程式內清除</strong> — 在「設定 &gt; 資料管理 &gt; 清除所有資料」中可清除設定、統計資料、赦免名單、成就紀錄及 iCloud 同步鍵值資料；該操作不會刪除分類紀錄、自訂相簿中繼資料或本地回收副本。</li>
+  <li><strong>iCloud 資料</strong> — 您可以在「系統設定 &gt; Apple ID &gt; iCloud &gt; 管理儲存空間」中手動刪除 NoPhoto 的 iCloud 資料。</li>
+</ul>
+
+<h2>10. 隱私政策的變更</h2>
+<p>我們可能會不時更新本隱私政策。變更後的政策將在本頁面發布，並更新頂部的「最後更新」日期。重大變更時，我們會在應用程式內進行通知。建議您定期查看本頁面以了解最新的隱私保護措施。</p>
+
+<h2>11. 聯絡我們</h2>
+<p>如果您對本隱私政策有任何疑問或建議，請透過以下方式聯絡我們：</p>
+<ul>
+  <li>電子郵件：<a href="mailto:kinyokun@163.com">kinyokun@163.com</a></li>
+</ul>
+
+</div>
+
+<!-- ==================== en ==================== -->
+<div class="lang-section" id="lang-en">
+
+<h1>Privacy Policy</h1>
+<p class="updated">Effective Date: April 6, 2026 &nbsp;|&nbsp; Last Updated: April 6, 2026</p>
+
+<div class="highlight">
+  <p><strong>Core Commitment: NoPhoto does not collect, upload, or share any of your photos or personal data. All photo processing is performed locally on your device.</strong></p>
+</div>
+
+<p>NoPhoto (hereinafter "the App") is developed and operated by kinyo (hereinafter "we" or "us"). We understand the importance of privacy. This policy explains how we handle information when you use the App.</p>
+
+<h2>1. Information We Collect</h2>
+
+<h3>1.1 Information We Do NOT Collect</h3>
+<ul>
+  <li><strong>Photos and Videos</strong> — The App does not read, analyze, upload, or transmit your photos to any external server in any way. All photo operations (browsing, deleting, classifying) are performed locally on your device through Apple's PhotoKit framework.</li>
+  <li><strong>Personal Identifiable Information</strong> — We do not collect your name, email address, phone number, geographic location, or any other personally identifiable information.</li>
+  <li><strong>Usage Behavior Data</strong> — We do not use any third-party analytics SDKs or tracking tools to collect your usage behavior.</li>
+</ul>
+
+<h3>1.2 Data Stored on Your Device</h3>
+<p>The following data is stored on your device locally. Items marked with iCloud are also synced if you explicitly enable iCloud Sync:</p>
+<table>
+  <tr><th>Data Type</th><th>Purpose</th><th>Storage Location</th></tr>
+  <tr><td>App Settings</td><td>Save your preference configuration (decision time, operation mode, etc.)</td><td>Local Device / iCloud</td></tr>
+  <tr><td>Statistics and Achievements</td><td>Display cleanup history, combo records, and achievement progress</td><td>Local Device / iCloud</td></tr>
+  <tr><td>Exemption List</td><td>Record photo identifiers you marked as exempt</td><td>Local Device / iCloud</td></tr>
+  <tr><td>Classification History and Custom Album Metadata</td><td>Keep track of classified photo identifiers and in-app album information</td><td>Local Device / iCloud</td></tr>
+  <tr><td>Local Recovery Copies</td><td>Provide in-app recovery for photos deleted outside hardcore mode</td><td>Local Device Only</td></tr>
+</table>
+
+<h2>2. Photo Library Access</h2>
+<p>The App requires access to your photo library to function properly. Here are the specifics:</p>
+<ul>
+  <li>We access your photo library through Apple's <strong>PhotoKit</strong> framework, which is a standard system interface provided by Apple.</li>
+  <li>You can choose to grant <strong>Full Access</strong> or <strong>Limited Access</strong> permissions. In Limited Access mode, only the photos you select are visible to the App.</li>
+  <li>Photo deletion operations use standard system APIs. iOS will display a confirmation dialog before deletion, requiring your explicit confirmation.</li>
+  <li>Deleted photos are moved to the iOS system's "Recently Deleted" folder and are automatically permanently deleted after 30 days.</li>
+  <li>You can modify or revoke photo library access permissions at any time in "Settings &gt; NoPhoto".</li>
+</ul>
+
+<h2>3. iCloud Sync</h2>
+<p>If you choose to enable iCloud Sync:</p>
+<ul>
+  <li>Synced data may include app settings, statistics and achievement data, the exemption list, classification history, and custom in-app album metadata — <strong>no photo content is included</strong>.</li>
+  <li>Data is transmitted through Apple's <strong>iCloud key-value storage service (NSUbiquitousKeyValueStore)</strong> and protected by Apple's encrypted iCloud transport and storage infrastructure.</li>
+  <li>Synced data is stored in your personal iCloud account, which we cannot directly access.</li>
+  <li>You can disable iCloud Sync at any time in the app settings.</li>
+</ul>
+
+<h2>4. Face-to-Face Sharing</h2>
+<p>The App provides a photo sharing feature over local area networks:</p>
+<ul>
+  <li>Photo data is transmitted directly between devices over the <strong>local Wi-Fi network</strong> using Apple's encrypted peer-to-peer session transport, without passing through any external servers.</li>
+  <li>The sharing feature compresses photos and strips location data by default to protect privacy (adjustable in settings).</li>
+  <li>After a sharing session ends, transmitted data is not retained on any intermediate nodes.</li>
+</ul>
+
+<h2>5. Payment Model</h2>
+<p>The App is a paid upfront app available on the App Store:</p>
+<ul>
+  <li>Purchase is completed through <strong>Apple's App Store</strong>. We do not have access to your payment information (credit card numbers, Apple ID passwords, etc.).</li>
+  <li>The App <strong>does not offer any subscriptions or in-app purchases</strong>. A one-time purchase unlocks all features.</li>
+</ul>
+
+<h2>6. Third-Party Services</h2>
+<p>The App <strong>does not integrate</strong> any third-party SDKs, including but not limited to:</p>
+<ul>
+  <li>Analytics tools (Google Analytics, Firebase Analytics, etc.)</li>
+  <li>Advertising networks (AdMob, Facebook Ads, etc.)</li>
+  <li>Crash reporting tools (Crashlytics, Sentry, etc.)</li>
+  <li>Social media SDKs</li>
+</ul>
+<p>We only use Apple-provided system frameworks and services (such as PhotoKit, StoreKit, and NSUbiquitousKeyValueStore).</p>
+
+<h2>7. Data Security</h2>
+<ul>
+  <li>All app data is stored on the device using iOS system-level encryption.</li>
+  <li>iCloud synced data is protected by Apple's transport encryption and storage encryption.</li>
+  <li>The App does not establish any network connections to external servers (except for iCloud Sync and iCloud photo downloads, which are handled through Apple's secure infrastructure).</li>
+</ul>
+
+<h2>8. Children's Privacy</h2>
+<p>The App is not intended for children under the age of 13. We do not knowingly collect personal information from children. Since the App does not collect any personal information, there is no risk of children's data collection.</p>
+
+<h2>9. Data Deletion</h2>
+<p>Since we do not store your data on any servers, you can completely delete all app data through the following methods:</p>
+<ul>
+  <li><strong>Delete the App</strong> — Uninstalling NoPhoto will remove all app data from your device.</li>
+  <li><strong>In-App Clear</strong> — Go to "Settings &gt; Data Management &gt; Clear All Data" to remove settings, statistics, the exemption list, achievements, and synced iCloud key-value data. This does not delete classification history, custom album metadata, or local recovery copies.</li>
+  <li><strong>iCloud Data</strong> — You can manually delete NoPhoto's iCloud data in "System Settings &gt; Apple ID &gt; iCloud &gt; Manage Storage".</li>
+</ul>
+
+<h2>10. Changes to This Privacy Policy</h2>
+<p>We may update this Privacy Policy from time to time. The revised policy will be posted on this page with an updated "Last Updated" date at the top. For significant changes, we will notify you within the App. We recommend that you review this page periodically for the latest privacy protection measures.</p>
+
+<h2>11. Contact Us</h2>
+<p>If you have any questions or suggestions regarding this Privacy Policy, please contact us at:</p>
+<ul>
+  <li>Email: <a href="mailto:kinyokun@163.com">kinyokun@163.com</a></li>
+</ul>
+
+</div>
+
+<!-- ==================== ja ==================== -->
+<div class="lang-section" id="lang-ja">
+
+<h1>プライバシーポリシー</h1>
+<p class="updated">発効日：2026 年 4 月 6 日 &nbsp;|&nbsp; 最終更新：2026 年 4 月 6 日</p>
+
+<div class="highlight">
+  <p><strong>基本方針：NoPhoto はお客様の写真や個人データを収集、アップロード、共有することは一切ありません。すべての写真処理はお客様のデバイス上でローカルに行われます。</strong></p>
+</div>
+
+<p>NoPhoto（以下「本アプリ」）は kinyo（以下「当社」）が開発・運営しています。当社はプライバシーの重要性を十分に認識しており、本ポリシーはお客様が本アプリをご利用になる際の情報の取り扱いについて説明するものです。</p>
+
+<h2>1. 当社が収集する情報</h2>
+
+<h3>1.1 当社が収集しない情報</h3>
+<ul>
+  <li><strong>写真および動画コンテンツ</strong> — 本アプリはお客様の写真を読み取り、分析、アップロード、または外部サーバーに送信することは一切ありません。すべての写真操作（閲覧、削除、分類）は Apple の PhotoKit フレームワークを通じてデバイス上でローカルに実行されます。</li>
+  <li><strong>個人を特定できる情報</strong> — 当社はお客様の氏名、メールアドレス、電話番号、地理的位置情報、その他個人を特定できる情報を収集しません。</li>
+  <li><strong>利用行動データ</strong> — 当社はお客様の利用行動を収集するためのサードパーティ製分析 SDK やトラッキングツールを一切使用しません。</li>
+</ul>
+
+<h3>1.2 デバイスに保存されるデータ</h3>
+<p>以下のデータはお客様のデバイスにローカルで保存されます。iCloud と表示された項目は、iCloud 同期を有効にした場合に同期されます：</p>
+<table>
+  <tr><th>データの種類</th><th>用途</th><th>保存場所</th></tr>
+  <tr><td>アプリ設定</td><td>お客様の設定（判定時間、操作モードなど）を保存</td><td>デバイスローカル / iCloud</td></tr>
+  <tr><td>統計・実績データ</td><td>整理履歴、コンボ記録、実績の進捗を表示</td><td>デバイスローカル / iCloud</td></tr>
+  <tr><td>免除リスト</td><td>免除としてマークした写真の識別子を記録</td><td>デバイスローカル / iCloud</td></tr>
+  <tr><td>分類履歴とカスタムアルバムのメタデータ</td><td>分類済み写真の識別子とアプリ内アルバム情報を保持</td><td>デバイスローカル / iCloud</td></tr>
+  <tr><td>ローカル回収コピー</td><td>ハードコアモード以外で削除した写真のアプリ内復元機能を提供</td><td>デバイスローカルのみ</td></tr>
+</table>
+
+<h2>2. フォトライブラリへのアクセス</h2>
+<p>本アプリが正常に動作するには、フォトライブラリへのアクセスが必要です。詳細は以下の通りです：</p>
+<ul>
+  <li>Apple の <strong>PhotoKit</strong> フレームワーク（Apple が提供する標準システムインターフェース）を通じてフォトライブラリにアクセスします。</li>
+  <li><strong>フルアクセス</strong>または<strong>制限付きアクセス</strong>のいずれかの権限を選択できます。制限付きアクセスモードでは、お客様が選択した写真のみが本アプリに表示されます。</li>
+  <li>写真の削除操作はシステム標準の API を使用します。削除前に iOS が確認ダイアログを表示し、お客様の明示的な確認が必要です。</li>
+  <li>削除された写真は iOS の「最近削除した項目」フォルダに移動され、30 日後に自動的に完全削除されます。</li>
+  <li>「設定 &gt; NoPhoto」からいつでもフォトライブラリのアクセス権限を変更または取り消すことができます。</li>
+</ul>
+
+<h2>3. iCloud 同期</h2>
+<p>iCloud 同期を有効にした場合：</p>
+<ul>
+  <li>同期されるデータには、アプリ設定、統計・実績データ、免除リスト、分類履歴、カスタムアルバムのメタデータが含まれる場合があります。<strong>写真コンテンツは一切含まれません</strong>。</li>
+  <li>データは Apple の <strong>iCloud キーバリューストレージサービス（NSUbiquitousKeyValueStore）</strong> を通じて送信され、Apple の iCloud インフラストラクチャによる転送暗号化とストレージ暗号化で保護されます。</li>
+  <li>同期データはお客様個人の iCloud アカウントに保存され、当社が直接アクセスすることはできません。</li>
+  <li>アプリの設定からいつでも iCloud 同期を無効にできます。</li>
+</ul>
+
+<h2>4. 対面共有機能</h2>
+<p>本アプリはローカルエリアネットワーク内での写真共有機能を提供します：</p>
+<ul>
+  <li>写真データは<strong>ローカル Wi-Fi ネットワーク</strong>を通じてデバイス間で直接送信され、Apple が提供する暗号化セッションを使用します。外部サーバーを経由することはありません。</li>
+  <li>共有機能はデフォルトで写真を圧縮し、プライバシー保護のため位置情報を除去します（設定で調整可能）。</li>
+  <li>共有セッション終了後、送信されたデータは中間ノードに保持されません。</li>
+</ul>
+
+<h2>5. 支払いモデル</h2>
+<p>本アプリは App Store で販売される買い切り型の有料アプリです：</p>
+<ul>
+  <li>購入は <strong>Apple の App Store</strong> を通じて行われます。当社がお客様の支払い情報（クレジットカード番号、Apple ID パスワードなど）にアクセスすることはありません。</li>
+  <li>本アプリには<strong>サブスクリプションやアプリ内課金は一切ありません</strong>。一度の購入ですべての機能をご利用いただけます。</li>
+</ul>
+
+<h2>6. サードパーティサービス</h2>
+<p>本アプリはサードパーティ SDK を<strong>一切組み込んでいません</strong>。以下を含みますが、これらに限定されません：</p>
+<ul>
+  <li>分析ツール（Google Analytics、Firebase Analytics など）</li>
+  <li>広告ネットワーク（AdMob、Facebook Ads など）</li>
+  <li>クラッシュレポートツール（Crashlytics、Sentry など）</li>
+  <li>ソーシャルメディア SDK</li>
+</ul>
+<p>当社は Apple が提供するシステムフレームワークおよびサービス（PhotoKit、StoreKit、NSUbiquitousKeyValueStore など）のみを使用しています。</p>
+
+<h2>7. データセキュリティ</h2>
+<ul>
+  <li>すべてのアプリデータは iOS のシステムレベル暗号化を使用してデバイスに保存されます。</li>
+  <li>iCloud 同期データは Apple の転送暗号化とストレージ暗号化で保護されます。</li>
+  <li>本アプリは外部サーバーへのネットワーク接続を一切確立しません（iCloud 同期および iCloud 写真のダウンロードを除く。これらは Apple の安全なインフラストラクチャを通じて行われます）。</li>
+</ul>
+
+<h2>8. 児童のプライバシー</h2>
+<p>本アプリは 13 歳未満の児童を対象としていません。当社は児童の個人情報を故意に収集することはありません。本アプリは個人情報を一切収集しないため、児童のデータ収集のリスクはありません。</p>
+
+<h2>9. データの削除</h2>
+<p>当社はサーバーにお客様のデータを保存していないため、以下の方法ですべてのアプリデータを完全に削除できます：</p>
+<ul>
+  <li><strong>アプリの削除</strong> — NoPhoto をアンインストールすると、デバイス上のすべてのアプリデータが削除されます。</li>
+  <li><strong>アプリ内クリア</strong> — 「設定 &gt; データ管理 &gt; すべてのデータを消去」で設定、統計データ、免除リスト、実績記録、iCloud 同期キーバリューデータを消去できます。この操作では分類履歴、カスタムアルバムのメタデータ、ローカル回収コピーは削除されません。</li>
+  <li><strong>iCloud データ</strong> — 「設定 &gt; Apple ID &gt; iCloud &gt; ストレージを管理」から NoPhoto の iCloud データを手動で削除できます。</li>
+</ul>
+
+<h2>10. プライバシーポリシーの変更</h2>
+<p>当社は本プライバシーポリシーを随時更新する場合があります。変更後のポリシーは本ページに掲載され、上部の「最終更新」日が更新されます。重要な変更がある場合は、アプリ内で通知いたします。最新のプライバシー保護措置を確認するため、本ページを定期的にご確認いただくことをお勧めします。</p>
+
+<h2>11. お問い合わせ</h2>
+<p>本プライバシーポリシーに関するご質問やご提案がございましたら、以下の方法でお問い合わせください：</p>
+<ul>
+  <li>メール：<a href="mailto:kinyokun@163.com">kinyokun@163.com</a></li>
+</ul>
+
+</div>
+
+<!-- ==================== ko ==================== -->
+<div class="lang-section" id="lang-ko">
+
+<h1>개인정보 처리방침</h1>
+<p class="updated">시행일: 2026년 4월 6일 &nbsp;|&nbsp; 최종 업데이트: 2026년 4월 6일</p>
+
+<div class="highlight">
+  <p><strong>핵심 약속: NoPhoto는 사용자의 사진이나 개인 데이터를 수집, 업로드 또는 공유하지 않습니다. 모든 사진 처리는 사용자의 기기에서 로컬로 수행됩니다.</strong></p>
+</div>
+
+<p>NoPhoto(이하 "본 앱")는 kinyo(이하 "당사")가 개발 및 운영합니다. 당사는 개인정보의 중요성을 깊이 인식하고 있으며, 본 방침은 사용자가 본 앱을 이용할 때 당사가 정보를 어떻게 처리하는지 설명합니다.</p>
+
+<h2>1. 당사가 수집하는 정보</h2>
+
+<h3>1.1 당사가 수집하지 않는 정보</h3>
+<ul>
+  <li><strong>사진 및 동영상 콘텐츠</strong> — 본 앱은 사용자의 사진을 읽거나 분석, 업로드하거나 어떤 방식으로든 외부 서버로 전송하지 않습니다. 모든 사진 작업(탐색, 삭제, 분류)은 Apple의 PhotoKit 프레임워크를 통해 기기에서 로컬로 수행됩니다.</li>
+  <li><strong>개인 식별 정보</strong> — 당사는 사용자의 이름, 이메일 주소, 전화번호, 위치 정보 또는 기타 개인을 식별할 수 있는 정보를 수집하지 않습니다.</li>
+  <li><strong>사용 행동 데이터</strong> — 당사는 사용자의 사용 행동을 수집하기 위해 서드파티 분석 SDK나 추적 도구를 사용하지 않습니다.</li>
+</ul>
+
+<h3>1.2 기기에 저장되는 데이터</h3>
+<p>다음 데이터는 사용자의 기기에 로컬로 저장됩니다. iCloud로 표시된 항목은 iCloud 동기화를 활성화한 경우 동기화됩니다:</p>
+<table>
+  <tr><th>데이터 유형</th><th>용도</th><th>저장 위치</th></tr>
+  <tr><td>앱 설정</td><td>사용자 환경설정(판정 시간, 작동 모드 등) 저장</td><td>기기 로컬 / iCloud</td></tr>
+  <tr><td>통계 및 업적 데이터</td><td>정리 기록, 콤보 기록, 업적 진행 상황 표시</td><td>기기 로컬 / iCloud</td></tr>
+  <tr><td>면제 목록</td><td>면제로 표시한 사진 식별자 기록</td><td>기기 로컬 / iCloud</td></tr>
+  <tr><td>분류 기록 및 사용자 정의 앨범 메타데이터</td><td>분류된 사진 식별자와 앱 내 앨범 정보 유지</td><td>기기 로컬 / iCloud</td></tr>
+  <tr><td>로컬 복구 사본</td><td>하드코어 모드 외에서 삭제된 사진의 앱 내 복구 기능 제공</td><td>기기 로컬 전용</td></tr>
+</table>
+
+<h2>2. 사진 보관함 접근</h2>
+<p>본 앱이 정상적으로 작동하려면 사진 보관함에 대한 접근 권한이 필요합니다. 세부 사항은 다음과 같습니다:</p>
+<ul>
+  <li>Apple이 제공하는 표준 시스템 인터페이스인 <strong>PhotoKit</strong> 프레임워크를 통해 사진 보관함에 접근합니다.</li>
+  <li><strong>전체 접근</strong> 또는 <strong>제한된 접근</strong> 권한 중 선택할 수 있습니다. 제한된 접근 모드에서는 사용자가 선택한 사진만 본 앱에 표시됩니다.</li>
+  <li>사진 삭제 작업은 시스템 표준 API를 사용합니다. 삭제 전에 iOS가 확인 대화 상자를 표시하며, 사용자의 명시적인 확인이 필요합니다.</li>
+  <li>삭제된 사진은 iOS의 "최근 삭제된 항목" 폴더로 이동되며, 30일 후 자동으로 영구 삭제됩니다.</li>
+  <li>"설정 &gt; NoPhoto"에서 언제든지 사진 보관함 접근 권한을 수정하거나 철회할 수 있습니다.</li>
+</ul>
+
+<h2>3. iCloud 동기화</h2>
+<p>iCloud 동기화를 활성화한 경우:</p>
+<ul>
+  <li>동기화되는 데이터에는 앱 설정, 통계 및 업적 데이터, 면제 목록, 분류 기록, 사용자 정의 앨범 메타데이터가 포함될 수 있습니다. <strong>사진 콘텐츠는 포함되지 않습니다</strong>.</li>
+  <li>데이터는 Apple의 <strong>iCloud 키-값 저장 서비스(NSUbiquitousKeyValueStore)</strong>를 통해 전송되며, Apple iCloud 인프라의 전송 암호화 및 저장 암호화로 보호됩니다.</li>
+  <li>동기화된 데이터는 사용자 개인의 iCloud 계정에 저장되며, 당사가 직접 접근할 수 없습니다.</li>
+  <li>앱 설정에서 언제든지 iCloud 동기화를 비활성화할 수 있습니다.</li>
+</ul>
+
+<h2>4. 대면 공유 기능</h2>
+<p>본 앱은 로컬 네트워크 내에서 사진 공유 기능을 제공합니다:</p>
+<ul>
+  <li>사진 데이터는 <strong>로컬 Wi-Fi 네트워크</strong>를 통해 기기 간에 직접 전송되며, Apple이 제공하는 암호화 세션을 사용합니다. 외부 서버를 거치지 않습니다.</li>
+  <li>공유 기능은 기본적으로 사진을 압축하고 개인정보 보호를 위해 위치 정보를 제거합니다(설정에서 조정 가능).</li>
+  <li>공유 세션이 종료된 후 전송된 데이터는 중간 노드에 보관되지 않습니다.</li>
+</ul>
+
+<h2>5. 결제 모델</h2>
+<p>본 앱은 App Store에서 판매되는 일회 구매 유료 앱입니다:</p>
+<ul>
+  <li>구매는 <strong>Apple의 App Store</strong>를 통해 이루어집니다. 당사는 사용자의 결제 정보(신용카드 번호, Apple ID 비밀번호 등)에 접근하지 않습니다.</li>
+  <li>본 앱에는 <strong>구독이나 앱 내 구매가 없습니다</strong>. 한 번 구매로 모든 기능을 이용할 수 있습니다.</li>
+</ul>
+
+<h2>6. 서드파티 서비스</h2>
+<p>본 앱은 서드파티 SDK를 <strong>일체 통합하지 않습니다</strong>. 여기에는 다음이 포함되지만 이에 국한되지 않습니다:</p>
+<ul>
+  <li>분석 도구 (Google Analytics, Firebase Analytics 등)</li>
+  <li>광고 네트워크 (AdMob, Facebook Ads 등)</li>
+  <li>충돌 보고 도구 (Crashlytics, Sentry 등)</li>
+  <li>소셜 미디어 SDK</li>
+</ul>
+<p>당사는 Apple이 제공하는 시스템 프레임워크와 서비스(PhotoKit, StoreKit, NSUbiquitousKeyValueStore 등)만 사용합니다.</p>
+
+<h2>7. 데이터 보안</h2>
+<ul>
+  <li>모든 앱 데이터는 iOS 시스템 수준 암호화를 사용하여 기기에 저장됩니다.</li>
+  <li>iCloud 동기화 데이터는 Apple의 전송 암호화 및 저장 암호화로 보호됩니다.</li>
+  <li>본 앱은 외부 서버로의 네트워크 연결을 일체 수립하지 않습니다(iCloud 동기화 및 iCloud 사진 다운로드 제외. 이는 Apple의 보안 인프라를 통해 처리됩니다).</li>
+</ul>
+
+<h2>8. 아동 개인정보</h2>
+<p>본 앱은 만 13세 미만의 아동을 대상으로 하지 않습니다. 당사는 아동의 개인정보를 고의로 수집하지 않습니다. 본 앱은 개인정보를 일체 수집하지 않으므로 아동 데이터 수집의 위험이 없습니다.</p>
+
+<h2>9. 데이터 삭제</h2>
+<p>당사는 서버에 사용자의 데이터를 저장하지 않으므로 다음 방법으로 모든 앱 데이터를 완전히 삭제할 수 있습니다:</p>
+<ul>
+  <li><strong>앱 삭제</strong> — NoPhoto를 삭제하면 기기의 모든 앱 데이터가 제거됩니다.</li>
+  <li><strong>앱 내 초기화</strong> — "설정 &gt; 데이터 관리 &gt; 모든 데이터 지우기"에서 설정, 통계 데이터, 면제 목록, 업적 기록 및 iCloud 동기화 키-값 데이터를 삭제할 수 있습니다. 이 작업으로 분류 기록, 사용자 정의 앨범 메타데이터 또는 로컬 복구 사본은 삭제되지 않습니다.</li>
+  <li><strong>iCloud 데이터</strong> — "설정 &gt; Apple ID &gt; iCloud &gt; 저장 공간 관리"에서 NoPhoto의 iCloud 데이터를 수동으로 삭제할 수 있습니다.</li>
+</ul>
+
+<h2>10. 개인정보 처리방침의 변경</h2>
+<p>당사는 본 개인정보 처리방침을 수시로 업데이트할 수 있습니다. 변경된 방침은 본 페이지에 게시되며, 상단의 "최종 업데이트" 날짜가 갱신됩니다. 중요한 변경 사항이 있을 경우 앱 내에서 알려드립니다. 최신 개인정보 보호 조치를 확인하기 위해 본 페이지를 정기적으로 확인하시기 바랍니다.</p>
+
+<h2>11. 문의하기</h2>
+<p>본 개인정보 처리방침에 관한 질문이나 제안이 있으시면 아래 방법으로 문의해 주십시오:</p>
+<ul>
+  <li>이메일: <a href="mailto:kinyokun@163.com">kinyokun@163.com</a></li>
+</ul>
+
+</div>
+
+<!-- ==================== es ==================== -->
+<div class="lang-section" id="lang-es">
+
+<h1>Política de Privacidad</h1>
+<p class="updated">Fecha de vigencia: 6 de abril de 2026 &nbsp;|&nbsp; Última actualización: 6 de abril de 2026</p>
+
+<div class="highlight">
+  <p><strong>Compromiso fundamental: NoPhoto no recopila, sube ni comparte ninguna de sus fotos ni datos personales. Todo el procesamiento de fotos se realiza de forma local en su dispositivo.</strong></p>
+</div>
+
+<p>NoPhoto (en adelante, "la Aplicación") es desarrollada y operada por kinyo (en adelante, "nosotros"). Comprendemos la importancia de la privacidad. Esta política explica cómo manejamos la información cuando usted utiliza la Aplicación.</p>
+
+<h2>1. Información que recopilamos</h2>
+
+<h3>1.1 Información que NO recopilamos</h3>
+<ul>
+  <li><strong>Fotos y vídeos</strong> — La Aplicación no lee, analiza, sube ni transmite sus fotos a ningún servidor externo de ninguna manera. Todas las operaciones con fotos (explorar, eliminar, clasificar) se realizan localmente en su dispositivo a través del framework PhotoKit de Apple.</li>
+  <li><strong>Información de identificación personal</strong> — No recopilamos su nombre, dirección de correo electrónico, número de teléfono, ubicación geográfica ni ninguna otra información que permita identificarle personalmente.</li>
+  <li><strong>Datos de comportamiento de uso</strong> — No utilizamos ningún SDK de análisis de terceros ni herramientas de rastreo para recopilar su comportamiento de uso.</li>
+</ul>
+
+<h3>1.2 Datos almacenados en su dispositivo</h3>
+<p>Los siguientes datos se almacenan localmente en su dispositivo. Los elementos marcados con iCloud también se sincronizan si usted activa explícitamente la Sincronización de iCloud:</p>
+<table>
+  <tr><th>Tipo de dato</th><th>Propósito</th><th>Ubicación de almacenamiento</th></tr>
+  <tr><td>Configuración de la app</td><td>Guardar sus preferencias (tiempo de decisión, modo de operación, etc.)</td><td>Dispositivo local / iCloud</td></tr>
+  <tr><td>Estadísticas y logros</td><td>Mostrar historial de limpieza, registros de combos y progreso de logros</td><td>Dispositivo local / iCloud</td></tr>
+  <tr><td>Lista de exenciones</td><td>Registrar los identificadores de fotos marcadas como exentas</td><td>Dispositivo local / iCloud</td></tr>
+  <tr><td>Historial de clasificación y metadatos de álbumes personalizados</td><td>Mantener los identificadores de fotos clasificadas y la información de álbumes dentro de la app</td><td>Dispositivo local / iCloud</td></tr>
+  <tr><td>Copias de recuperación locales</td><td>Proporcionar recuperación dentro de la app para fotos eliminadas fuera del modo hardcore</td><td>Solo dispositivo local</td></tr>
+</table>
+
+<h2>2. Acceso a la fototeca</h2>
+<p>La Aplicación requiere acceso a su fototeca para funcionar correctamente. A continuación se detallan los aspectos específicos:</p>
+<ul>
+  <li>Accedemos a su fototeca a través del framework <strong>PhotoKit</strong> de Apple, que es una interfaz estándar del sistema proporcionada por Apple.</li>
+  <li>Puede elegir otorgar permisos de <strong>Acceso completo</strong> o <strong>Acceso limitado</strong>. En el modo de Acceso limitado, solo las fotos que usted seleccione serán visibles para la Aplicación.</li>
+  <li>Las operaciones de eliminación de fotos utilizan APIs estándar del sistema. iOS mostrará un cuadro de diálogo de confirmación antes de la eliminación, requiriendo su confirmación explícita.</li>
+  <li>Las fotos eliminadas se mueven a la carpeta "Eliminados recientemente" del sistema iOS y se eliminan permanentemente de forma automática después de 30 días.</li>
+  <li>Puede modificar o revocar los permisos de acceso a la fototeca en cualquier momento en "Ajustes &gt; NoPhoto".</li>
+</ul>
+
+<h2>3. Sincronización de iCloud</h2>
+<p>Si elige activar la Sincronización de iCloud:</p>
+<ul>
+  <li>Los datos sincronizados pueden incluir la configuración de la app, estadísticas y datos de logros, la lista de exenciones, el historial de clasificación y los metadatos de álbumes personalizados dentro de la app — <strong>no se incluye ningún contenido fotográfico</strong>.</li>
+  <li>Los datos se transmiten a través del <strong>servicio de almacenamiento de clave-valor de iCloud (NSUbiquitousKeyValueStore)</strong> de Apple y están protegidos por el cifrado de transporte y almacenamiento de la infraestructura de iCloud de Apple.</li>
+  <li>Los datos sincronizados se almacenan en su cuenta personal de iCloud, a la cual no podemos acceder directamente.</li>
+  <li>Puede desactivar la Sincronización de iCloud en cualquier momento desde los ajustes de la aplicación.</li>
+</ul>
+
+<h2>4. Compartir cara a cara</h2>
+<p>La Aplicación ofrece una función para compartir fotos a través de redes de área local:</p>
+<ul>
+  <li>Los datos de las fotos se transmiten directamente entre dispositivos a través de la <strong>red Wi-Fi local</strong> utilizando el transporte cifrado punto a punto de Apple, sin pasar por ningún servidor externo.</li>
+  <li>La función de compartir comprime las fotos y elimina los datos de ubicación de forma predeterminada para proteger la privacidad (ajustable en la configuración).</li>
+  <li>Una vez finalizada la sesión de uso compartido, los datos transmitidos no se retienen en ningún nodo intermedio.</li>
+</ul>
+
+<h2>5. Modelo de pago</h2>
+<p>La Aplicación es una app de pago único disponible en la App Store:</p>
+<ul>
+  <li>La compra se realiza a través de la <strong>App Store de Apple</strong>. No tenemos acceso a su información de pago (números de tarjeta de crédito, contraseñas de Apple ID, etc.).</li>
+  <li>La Aplicación <strong>no ofrece suscripciones ni compras dentro de la app</strong>. Una única compra desbloquea todas las funciones.</li>
+</ul>
+
+<h2>6. Servicios de terceros</h2>
+<p>La Aplicación <strong>no integra</strong> ningún SDK de terceros, incluyendo, entre otros:</p>
+<ul>
+  <li>Herramientas de análisis (Google Analytics, Firebase Analytics, etc.)</li>
+  <li>Redes publicitarias (AdMob, Facebook Ads, etc.)</li>
+  <li>Herramientas de informes de errores (Crashlytics, Sentry, etc.)</li>
+  <li>SDKs de redes sociales</li>
+</ul>
+<p>Solo utilizamos frameworks y servicios del sistema proporcionados por Apple (como PhotoKit, StoreKit y NSUbiquitousKeyValueStore).</p>
+
+<h2>7. Seguridad de los datos</h2>
+<ul>
+  <li>Todos los datos de la aplicación se almacenan en el dispositivo mediante cifrado a nivel del sistema iOS.</li>
+  <li>Los datos sincronizados con iCloud están protegidos por el cifrado de transporte y almacenamiento de Apple.</li>
+  <li>La Aplicación no establece ninguna conexión de red con servidores externos (excepto la Sincronización de iCloud y las descargas de fotos de iCloud, que se gestionan a través de la infraestructura segura de Apple).</li>
+</ul>
+
+<h2>8. Privacidad de los menores</h2>
+<p>La Aplicación no está dirigida a menores de 13 años. No recopilamos deliberadamente información personal de menores. Dado que la Aplicación no recopila ninguna información personal, no existe riesgo de recopilación de datos de menores.</p>
+
+<h2>9. Eliminación de datos</h2>
+<p>Dado que no almacenamos sus datos en ningún servidor, puede eliminar completamente todos los datos de la aplicación mediante los siguientes métodos:</p>
+<ul>
+  <li><strong>Eliminar la Aplicación</strong> — Desinstalar NoPhoto eliminará todos los datos de la aplicación de su dispositivo.</li>
+  <li><strong>Borrado dentro de la app</strong> — Vaya a "Ajustes &gt; Gestión de datos &gt; Borrar todos los datos" para eliminar los ajustes, las estadísticas, la lista de exenciones, los logros y los datos de clave-valor sincronizados con iCloud. Esta operación no elimina el historial de clasificación, los metadatos de álbumes personalizados ni las copias de recuperación locales.</li>
+  <li><strong>Datos de iCloud</strong> — Puede eliminar manualmente los datos de iCloud de NoPhoto en "Ajustes &gt; Apple ID &gt; iCloud &gt; Gestionar almacenamiento".</li>
+</ul>
+
+<h2>10. Cambios en esta Política de Privacidad</h2>
+<p>Podemos actualizar esta Política de Privacidad de vez en cuando. La política revisada se publicará en esta página con una fecha de "Última actualización" actualizada en la parte superior. Para cambios significativos, le notificaremos dentro de la Aplicación. Le recomendamos que revise esta página periódicamente para conocer las últimas medidas de protección de la privacidad.</p>
+
+<h2>11. Contáctenos</h2>
+<p>Si tiene alguna pregunta o sugerencia sobre esta Política de Privacidad, puede contactarnos a través de:</p>
+<ul>
+  <li>Correo electrónico: <a href="mailto:kinyokun@163.com">kinyokun@163.com</a></li>
+</ul>
+
+</div>
+
 <footer>
   <p>&copy; 2026 kinyo. All rights reserved.</p>
 </footer>
 
 </div>
+
+<script>
+(function() {
+  const LANGS = ['zh-Hans','zh-Hant','en','ja','ko','es'];
+  const BACK_TEXT = {
+    'zh-Hans': '返回首页',
+    'zh-Hant': '返回首頁',
+    'en': 'Back to Home',
+    'ja': 'ホームに戻る',
+    'ko': '홈으로 돌아가기',
+    'es': 'Volver al inicio'
+  };
+  const TITLES = {
+    'zh-Hans': 'NoPhoto — 隐私政策',
+    'zh-Hant': 'NoPhoto — 隱私政策',
+    'en': 'NoPhoto — Privacy Policy',
+    'ja': 'NoPhoto — プライバシーポリシー',
+    'ko': 'NoPhoto — 개인정보 처리방침',
+    'es': 'NoPhoto — Política de Privacidad'
+  };
+
+  function detectLang() {
+    // 1. Check URL hash
+    var hash = location.hash.replace('#','').trim();
+    if (hash && LANGS.indexOf(hash) !== -1) return hash;
+
+    // 2. Check browser language
+    var navLangs = navigator.languages || [navigator.language || navigator.userLanguage || ''];
+    for (var i = 0; i < navLangs.length; i++) {
+      var bl = navLangs[i].toLowerCase();
+      // Exact matches first
+      if (bl === 'zh-hans' || bl === 'zh-cn') return 'zh-Hans';
+      if (bl === 'zh-hant' || bl === 'zh-tw' || bl === 'zh-hk' || bl === 'zh-mo') return 'zh-Hant';
+      if (bl.indexOf('zh') === 0) return 'zh-Hans'; // default Chinese -> Simplified
+      if (bl.indexOf('ja') === 0) return 'ja';
+      if (bl.indexOf('ko') === 0) return 'ko';
+      if (bl.indexOf('es') === 0) return 'es';
+      if (bl.indexOf('en') === 0) return 'en';
+    }
+
+    // 3. Fallback
+    return 'zh-Hans';
+  }
+
+  function switchLang(lang) {
+    // Hide all sections
+    var sections = document.querySelectorAll('.lang-section');
+    for (var i = 0; i < sections.length; i++) {
+      sections[i].classList.remove('active');
+    }
+    // Show target section
+    var target = document.getElementById('lang-' + lang);
+    if (target) target.classList.add('active');
+
+    // Update buttons
+    var buttons = document.querySelectorAll('.lang-switcher button');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].classList.toggle('active', buttons[i].getAttribute('data-lang') === lang);
+    }
+
+    // Update page title
+    document.title = TITLES[lang] || TITLES['zh-Hans'];
+
+    // Update html lang
+    document.documentElement.lang = lang;
+
+    // Update back link text
+    var backSpan = document.querySelector('[data-back]');
+    if (backSpan) backSpan.textContent = BACK_TEXT[lang] || BACK_TEXT['zh-Hans'];
+
+    // Update hash without scrolling
+    if (history.replaceState) {
+      history.replaceState(null, '', '#' + lang);
+    } else {
+      location.hash = lang;
+    }
+  }
+
+  // Bind buttons
+  var buttons = document.querySelectorAll('.lang-switcher button');
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function() {
+      switchLang(this.getAttribute('data-lang'));
+    });
+  }
+
+  // Listen for hash changes
+  window.addEventListener('hashchange', function() {
+    var hash = location.hash.replace('#','').trim();
+    if (hash && LANGS.indexOf(hash) !== -1) {
+      switchLang(hash);
+    }
+  });
+
+  // Initialize
+  switchLang(detectLang());
+})();
+</script>
 
 </body>
 </html>
